@@ -1,0 +1,551 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{xstring}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{float}
+\pgfplotsset{compat=newest}
+
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SME0500 \\ Cálculo Numérico \\ Atividade 3}
+\author{Gabriel Silva Fontes | 10856803}
+\begin{document}
+\maketitle
+
+ \[
+ f(x) = \frac{x}{2} - \tan{(2x)}
+ \]
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+  \begin{axis}
+    [width=6cm,
+     height=6cm,
+     ticklabel style={font=\tiny},
+     grid=both,
+     trig format=rad,
+     grid style={line width=.1pt, draw=gray!10},
+     major grid style={line width=.2pt,draw=gray!50},
+     axis lines=middle,
+     xmin=-1,xmax=5,ymin=-4,ymax=4,
+     restrict y to domain=-15:15,
+     restrict x to domain=-2:8,
+     samples=200,
+    ]
+    \addplot[red] {(x/2)-tan(2*x)};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\setcounter{section}{-1}
+\section{Geral}
+\subsection{Intervalos e estimativas iniciais}
+Nos cálculos, escolhi o par \([1,9,\; 2,1]\) para a primeira raiz, e \([3,5,\; 3,8]\) para a segunda. No caso de métodos que utilizam só um ponto, utilizei o primeiro de cada dupla.
+
+Essa escolha foi feita por serem números relativamente próximos das raízes, que permitem o cálculo, a segunda dupla foi conscientemente escolhida para ser mais ``difícil' que a primeira (assim mostrando uma ideia do grau de convergência).
+
+\subsection{Critérios de parada}
+
+Nas contas computacionais realizadas no octave, usei os critérios de parada CP1 (número máximo de iterações igual a \(10^3\)) e CP4 (resíduo menor que \(10^{-10}\)). A escolha foi feita por simplicidade de implementação, e boa complementação entre os dois: CP1 interrompe casos onde não acontece convergência (que CP4 não faz), e CP4 interrompe casos onde a convergência é encontrada (evitando que aconteçam \(10^3\) iterações desnecessariamente).
+
+\subsection{Divergências}
+Não consegui encontrar um \(g\) válido para o método do ponto fixo. Ouvi o Uebert mencionando, se não me engano, que tem como resolver, mas eu não conseguir isolar o \(x\) de uma maneira que desse.
+
+\subsection{Comparação dos métodos}
+\subsubsection{Número de iterações e veolocidade de convergência}
+É de se esperar que os métodos tenham graus de convergência diferentes. Considerando o cálculo primeira raiz com os critérios explicados, os métodos podem ser ordenados em ordem crescente de iterações nescessárias: Newton (4), Secante (6), Falsa Posição (20), Bisseção (31).
+
+Como explicado, não consegui encontrar um \(g\) para que o método do ponto fixo convergisse.
+
+\subsubsection{Dificuldade de implementação}
+Nenhum dos métodos é particularmente difícil de ser implementado. No máximo, talvez, o de Newton seja um pouco, por precisar de uma derivada.
+
+\subsection{Minhas palavras sobre bisseccção, falsa posição, e secante}
+Apesar de muito mais rápido, o método da secante é o com menos chance de convergir entre esses três. Sua fórmula é parecida com o da falsa posição.
+\medskip
+
+O método da falsa posição é, em quase todos os casos, uma bisecção melhorada. 
+
+Existem alguns casos excepcionais em que sua convergência pode ser mais lenta, mas é simples de detectar e criar melhorias que visam eliminar esses problemas (Illinois, Anderson-Bjork, entre outros).
+
+Outro fato interessante é que esse método pode ser interpretado como uma aproximação do de Newton, visto que é possível aproximar suas funções utilizando método das diferenças finitas.
+
+\section{Bissecção}
+\subsection{Sobre}
+A biseção é uma forma trivial de fazer uma espécie de busca binária para encontrar uma raiz da função.
+
+Seu processo envolve em tomar um \(a\) e um \(b\), onde \(f(a)\) e \(f(b)\) têm sinais opostos, pegar o ponto médio \(c\) entre eles dois, e repetir esse processo colocando \(c\) no lugar de \(a\) ou \(b\), dependendo do sinal de \(f(c)\).
+
+\subsection{Implementação}
+\begin{minted}{matlab}
+% Calcula a raiz usando o método da bissecção
+function c = bissection(a, b, f, min_err, max_its)
+    % Verificar que a reta é cruzada
+    if (sign(f(a)) == sign(f(b)))
+        error("Os dois extremos precisam cruzar a reta x")
+    end
+    % Iterar até 'max_its' vezes
+    for i = 1:max_its
+        % Valor médio entre a e b
+        c = (a+b)/2;
+        % Escolher onde substituir com o c baseado
+        % nos sinais (a e b devem ter sinais opostos)
+        if (sign(f(c)) == sign(f(a)))
+            a = c;
+        else
+            b = c;
+        end
+        % Verificar (quase) convergência
+        if (abs(f(c)) < min_err)
+            return;
+        end
+    end
+    error("Não foi possível convergir")
+end
+\end{minted}
+\subsection{Iterações manuais}
+\subsubsection{Primeira raiz}
+\begin{align*}
+    a &= 1,9,\; b =2,1,\; f(a) = 0,1764,\; f(b) = -0.7278 \\
+    \implies c &= 2,\; f(c) = -0,1578 \\
+    a &= 1,9,\; b =2,\; f(a) = 0,1764,\; f(b) = -0.1578 \\
+    \implies c &= 1,95\; f(c) = 0,027575 \\
+    a &= 1,95,\; b =2,\; f(a) = 0,027575,\; f(b) = -0.1578 \\
+    \implies c &= 1,975\; f(c) = -0.059611 \\
+\end{align*}
+
+\subsubsection{Segunda raiz}
+\begin{align*}
+    a &= 3,5,\; b =3,8,\; f(a) = 0,8786,\; f(b) = -1,9523 \\
+    \implies c &= 3,65,\; f(c) = 0,2084 \\
+    a &= 3,65,\; b =3,8,\; f(a) = 0,2084,\; f(b) = -1,9523 \\
+    \implies c &= 3,725,\; f(c) = -0,4767 \\
+    a &= 3,65,\; b =3,725,\; f(a) = 0,2084,\; f(b) = -0,4767 \\
+    \implies c &= 3,6875,\; f(c) = -0,081856 \\
+\end{align*}
+
+\subsection{5 Iterações}
+\subsubsection{Primeira raiz (\(1,958217684\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+\multicolumn{1}{l}{a} & \multicolumn{1}{l}{b} & \multicolumn{1}{l}{c} & \multicolumn{1}{l}{f(c)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+1.9                   & 2.1                   & 2                     & -0.157821                & \multicolumn{1}{l}{}              \\
+1.9                   & 2                     & 1.95                  & 0.0275754                & 9.75E-02                          \\
+1.95                  & 2                     & 1.975                 & -0.0596107               & 4.94E-02                          \\
+1.95                  & 1.975                 & 1.9625                & -0.0147763               & 2.45E-02                          \\
+1.95                  & 1.9625                & 1.95625               & 0.00669464               & 1.22E-02                          \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Segunda raiz (\(3.677963512\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+\multicolumn{1}{l}{a} & \multicolumn{1}{l}{b} & \multicolumn{1}{l}{c} & \multicolumn{1}{l}{f(c)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+3.5                   & 3.8                   & 3.65                  & 0.208439                 & \multicolumn{1}{l}{}              \\
+3.65                  & 3.8                   & 3.725                 & -0.476711                & 2.79E-01                          \\
+3.65                  & 3.725                 & 3.6875                & -0.0818556               & 1.38E-01                          \\
+3.65                  & 3.6875                & 3.66875               & 0.0734998                & 6.88E-02                          \\
+3.66875               & 3.6875                & 3.67813               & -0.00133533              & 3.45E-02                          \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\section{Falsa posição}
+\subsection{Sobre}
+Como vimos, a bissecção pode não ser muito eficiente e sua proximidade oscila bastante no processo.
+
+O método de falsa posição (\textit{regula falsi}) nos diz para criar uma reta entre \(a\) e \(b\), e tomar como \(c\) o ponto \(x\) onde essa reta é \(y=0\) (ou seja, onde cruza com o eixo \(x\)). Por fim, substituir \(a\) ou \(b\) por \(c\) (dependendo do sinal de \(c\)), e repetir.
+
+Utilizaremos a expressão \(c = b-f(b)\cdot(\frac{b-a}{f(b)-f(a)})\) para calcular o novo ponto em cada iteração. Essa expressão é facilmente obtida igualando o coeficiente angular das retas \(\overline{ac}\) e \(\overline{cb}\).
+\subsection{Implementação}
+\begin{minted}{matlab}
+% Calcula a raíz usando o método da falsa posição
+function c = regula_falsi(a, b, f, min_err, max_its)
+    if (sign(f(a)) == sign(f(b)))
+        error("Os dois extremos precisam cruzar a reta x")
+    end
+    for i = 1:max_its
+        % Essa equação tem origem ao igualar os
+        % coeficiente das retas b-c e a-c,
+        c = b - (f(b) * ((b-a)/(f(b)-f(a))));
+
+        if sign(f(c)) == sign(f(a))
+            a = c;
+        else
+            b = c;
+        end
+        if (abs(f(c)) < min_err)
+            return;
+        end
+    end
+    error("Não foi possível convergir")
+end
+\end{minted}
+\subsection{Iterações manuais}
+\subsubsection{Primeira raiz}
+\begin{align*}
+    a &= 1,9,\; b =2,1,\; f(a) = 0,1764,\; f(b) = -0,7278 \\
+    \implies c &= 1,939,\; f(c) = 0,062893 \\
+    a &= 1,939,\; b =2,1,\; f(a) = 0,062893,\; f(b) = -0,7278 \\
+    \implies c &= 1,9518,\; f(c) = 0,021547 \\
+    a &= 1,9518,\; b =2,1,\; f(a) = 0,021547,\; f(b) = -0,7278 \\
+    \implies c &= 1,9561,\; f(c) = 0,007285 \\
+\end{align*}
+\subsubsection{Segunda raiz}
+\begin{align*}
+    a &= 3,5,\; b =3,8,\; f(a) = 0,8786,\; f(b) = -1,9523 \\
+    \implies c &= 3,5931,\; f(c) = 0,5286 \\
+    a &= 3,5931,\; b =3,8,\; f(a) = 0,5286,\; f(b) = -1,9523 \\
+    \implies c &= 3,6372,\; f(c) = 0,291 \\
+    a &= 3,6372,\; b =3,8,\; f(a) = 0,291,\; f(b) = -1,9523 \\
+    \implies c &= 3,6583,\; f(c) = 0,1509 \\
+\end{align*}
+
+\subsection{5 Iterações}
+\subsubsection{Primeira raiz (\(1,958217684\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+\multicolumn{1}{l}{a} & \multicolumn{1}{l}{b} & \multicolumn{1}{l}{c} & \multicolumn{1}{l}{f(c)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+1.9                   & 2.1                   & 1.93903               & 0.0628933                & \multicolumn{1}{l}{}              \\
+1.93903               & 2.1                   & 1.95183               & 0.0215173                & 2.50E-02                          \\
+1.95183               & 2.1                   & 1.95609               & 0.00724999               & 8.33E-03                          \\
+1.95609               & 2.1                   & 1.95751               & 0.0024299                & 2.78E-03                          \\
+1.95751               & 2.1                   & 1.95798               & 0.000812945              & 9.20E-04                         \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Segunda raiz (\(3.677963512\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+\multicolumn{1}{l}{a} & \multicolumn{1}{l}{b} & \multicolumn{1}{l}{c} & \multicolumn{1}{l}{f(c)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+3.5                   & 3.8                   & 3.59311               & 0.528533                 & \multicolumn{1}{l}{}              \\
+3.59311               & 3.8                   & 3.63718               & 0.290977                 & 1.60E-01                          \\
+3.63718               & 3.8                   & 3.6583                & 0.150922                 & 7.73E-02                          \\
+3.6583                & 3.8                   & 3.66847               & 0.0756412                & 3.73E-02                          \\
+3.66847               & 3.8                   & 3.67338               & 0.0372305                & 1.80E-02                         \\ \bottomrule
+\end{tabular}
+\end{table}
+
+É interessante perceber que tende a trocar apenas um lado, diferente da bissecção.
+
+\section{Ponto fixo}
+\subsection{Sobre}
+A ideia do ponto fixo é que, dada uma função \(g\), temos um ponto \(x\), onde a entrada e saída são iguais. Isto é:
+\[x = g(x)\]
+
+Considere uma função \(f\) cujas raízes \(p\) queremos encontrar:
+\[f(p) = 0\]
+
+Suponha que essa função tem uma função \(g\) correspondente que pode ser definida como:
+\[g(x) = x - f(x)\]
+
+Como \(p\) é raiz, temos:
+\[g(p) = p - f(p) \implies g(p) = p\]
+
+Que é justamente um ponto fixo. Isso significa que, para encontrar uma raiz de \(f\), basta encontrar um ponto fixo numa função \(g(x) = x - f(x)\).
+
+Para encontrar esse tão desejado ponto, basta selecionar um \(x\) como ponto de partida e computar \(g(x)\) até eles serem iguais: 
+\[x_{i+1} = g(x_i)\]
+
+Nem sempre será possível encontrar uma certa raiz \(p\) por este método, pois \(g\) pode não convergir nela. Uma maneira de verificar é com \(|g'(p)| < 1\). Caso não, não temos garantia de que a função \(g\) encontrada irá convergir nessa raiz específica.
+
+Apesar de se ter o trabalho inicial de obter a \(g\), é um método simples de se implementar e com uma performance razoável.
+
+\subsection{Implementação}
+\begin{minted}{matlab}
+% Calcula a raiz de uma função pelo metodo do ponto fixo
+function x = fixed_point(x, f, g, min_err, max_its)
+    % Iterar até 'max_its' vezes
+    for i = 1:max_its
+        % Calcular próximo elemento
+        x = g(x);
+        if (abs(f(x)) < min_err)
+            return;
+        end
+    end
+    error("Não foi possível convergir")
+end
+\end{minted}
+
+\subsection{Iterações manuais}
+Vamos ver como calcular \(g\) no caso da nossa \(f(x) = \frac{x}{2}-\tan{2x}\):
+\begin{align*}
+    0 &= \frac{x}{2}-\tan{2x} \\
+    \tan{2x} &= \frac{x}{2} \\
+    x &= 2\tan{2x} \\
+    g(x) &= 2\tan{2x} \\
+\end{align*}
+
+Também vamos calcular a derivada de \(g\), para fins informativos:
+\[g'(x) = \frac{1}{2} - 2\sec^2{2x}\]
+
+Colocando \(g'\) num gráfico:
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+  \begin{axis}
+    [width=6cm,
+     height=4cm,
+     ticklabel style={font=\tiny},
+     grid=both,
+     trig format=rad,
+     grid style={line width=.1pt, draw=gray!10},
+     major grid style={line width=.2pt,draw=gray!50},
+     axis lines=middle,
+     xmin=-1,xmax=5,ymin=-2.5,ymax=0.5,
+     restrict y to domain=-15:15,
+     restrict x to domain=-2:8,
+     samples=200,
+    ]
+    \addplot[red] {(1/2)-2*((sec(2*x))^2)};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+É observável que não existe \(x \in \mathbb{R}\) tq \(|g'(x)| < 1\). Logo, não é possível revolver essa questão usando esse \(g\). De fato, executando a implementação a seguir, as iterações rodam muitas e muitas vezes sem serem aceitas. Ou seja, não converge.
+
+Pode ser que exista algum \(g(x) = x - f(x)\) em que isso funcione, mas não consegui isolar nenhum além do mencionado acima.
+
+Mesmo assim, seguem as iterações feitas manualmente e computacionalmente.
+
+\subsubsection{Primeira raiz}
+\begin{align*}
+    x_1 &= g(1,9) = 1,5471 \\
+    \implies x_2 &= g(1,5471) = -0,094808 \\
+    \implies x_3 &= g(-0,094808) = -0,3838 \\
+    \implies x_4 &= g(-0,3838) = -1,9304 \\
+\end{align*}
+
+\subsubsection{Segunda raiz}
+\begin{align*}
+    x_1 &= g(3,5) = 1.7429 \\
+    x_2 &= g(1.7429) = 0.7169 \\
+    x_3 &= g(0.7169) = 14.515 \\
+    x_4 &= g(14.515) = 1.8882 \\
+\end{align*}
+
+\subsection{5 Iterações}
+
+\subsubsection{Primeira raiz (\(1,958217684\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+\multicolumn{1}{l}{x} & \multicolumn{1}{l}{g(x)} & \multicolumn{1}{l}{f(x)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+1.9                   & 1.547112181              & 0.1764439095             & \multicolumn{1}{l}{}              \\
+1.54711               & -0.0948075               & 0.82096                  & 5.46E-01                          \\
+-0.0948075            & -0.383841                & 0.144517                 & 1.56E-01                          \\
+-0.383841             & -1.93036                 & 0.773261                 & 1.11E-01                          \\
+-1.93036              & -1.75108                 & -0.0896433               & 2.99E+00                          \\
+-1.75108              & -0.754089                & -0.498494                & 3.14E-01                         \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Segunda raiz (\(3.677963512\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+\multicolumn{1}{l}{x} & \multicolumn{1}{l}{g(x)} & \multicolumn{1}{l}{f(x)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+3.5                   & 1.742895965              & 0.8785520173             & \multicolumn{1}{l}{}              \\
+1.7429                & 0.716937                 & 0.512979                 & 3.06E+00                          \\
+0.716937              & 14.5155                  & -6.89928                 & 7.36E-01                          \\
+14.5155               & 1.88823                  & 6.31363                  & 2.00E+02                          \\
+1.88823               & 1.4732                   & 0.207516                 & 2.38E+01                          \\
+1.4732                & -0.395419                & 0.93431                  & 6.11E-01                         \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\section{Método de Newton}
+\subsection{Sobre}
+O método de newton, assim como os acima, permite encontrar uma raiz partindo de um chute inicial. A ideia é seguir a inclinação da derivada para encontrar a próxima estimativa. Por isso, esta não pode ser zero (pois não saberíamos para qual lado seguir).
+
+Repetimos a seguinte fórmula até chegar numa convergência:
+\[x_{i+1} = x_i + \frac{f(x_i)}{f'(x_i)},\; f'(x_i) \ne 0\]
+
+
+É uma conta relativamente simples e converge bem rápido. Mas requer uma derivada, que pode ser complexa, dependendo da função, e alguns casos não converge.
+\subsection{Implementação}
+Nossa função do octave precisará do pacote \(symbolic\) para calcular a derivada com \(diff\):
+
+\begin{minted}{matlab}
+% Calcula a raiz usando o método de newton
+function x = newton(x, f, min_err, max_its)
+    ft = matlabFunction(diff(f, sym('x')));
+    for i = 1:max_its
+        % Caso a derivada dê 0
+        if (ft(x) == 0)
+            error("Não é possível prosseguir desse ponto: a derivada é zero")
+        end
+        x = x - (f(x)/ft(x));
+        if (abs(f(x)) < min_err)
+            return;
+        end
+    end
+    error("Não foi possível convergir")
+end
+\end{minted}
+\subsection{Iterações manuais}
+Usaremos \(f'(x) = -2\tan^2{2x} - \frac{3}{2}\).
+
+\subsubsection{Primeira raiz}
+\begin{align*}
+    x_1 &= 1,9 + \frac{f(1,9)}{f'(1,9)} = 1,9654 \\
+    x_2 &= 1,9654 + \frac{f(1,9654)}{f'(1,9654)} = 1,9583 \\
+    x_3 &= 1,9583 + \frac{f(1,9583)}{f'(1,9583)} = 1,9582 \\
+\end{align*}
+
+\subsubsection{Segunda raiz}
+\begin{align*}
+    x_1 &= 3,5 + \frac{f(3,5)}{f'(3,5)} = 3,791 \\
+    \implies x_2 &= 3,791 + \frac{f(3,791)}{f'(3,791)} = 3,7289 \\
+    \implies x_3 &= 3,7289 + \frac{f(3,7289)}{f'(3,7289)} = 3,6882 \\
+    \implies x_4 &= 3,6882 + \frac{f(3,6882)}{f'(3,6882)} = 3,6784 \\
+    \implies x_5 &= 3,6784 + \frac{f(3,6784)}{f'(3,6784)} = 3,678 \\
+\end{align*}
+
+\subsection{5 Iterações}
+\subsubsection{Primeira raiz (\(1,958217684\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrr@{}}
+\toprule
+\multicolumn{1}{l}{x} & \multicolumn{1}{l}{f(x)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+1.9                   & 0.1764439095             & \multicolumn{1}{l}{}              \\
+1.96543               & -0.0250452               & 1.29E-01                          \\
+1.95834               & -0.000401102             & 1.39E-02                          \\
+1.95822               & -1.06E-07                & 2.35E-04                          \\
+1.95822               & -7.33E-15                & 0.00E+00                          \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Segunda raiz (\(3.677963512\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrr@{}}
+\toprule
+\multicolumn{1}{l}{x} & \multicolumn{1}{l}{f(x)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+3.5                   & 0.8785520173             & \multicolumn{1}{l}{}              \\
+3.79102               & -1.69073                 & 1.10E+00                          \\
+3.72891               & -0.526367                & 2.32E-01                          \\
+3.68821               & -0.0882216               & 1.50E-01                          \\
+3.67837               & -0.00340025              & 3.62E-02                          \\
+3.67796               & -5.44E-06                & 1.51E-03                          \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\section{Secante}
+\subsection{Sobre}
+Tomamos dois chutes (\(x_0\) e \(x_1\)) próximos da raiz, traçamos uma secante, e tomamos como \(x_2\) a coordenada \(x\) do ponto onde ela se cruzou com o eixo \(x\). Repetimos isso para \(x_1\) e \(x_2\), e assim sucessivamente. Ou seja, usamos a seguinte relação (obtida da equação de inclinação):
+\[x_{i} = x_{i-1} - f(x_{i-1}) \cdot \frac{x_{i-1} - x_{i-2}}{f(x_{i-1}) - f(x_{i-2})}\]
+
+Esse método é parecido com o de Newton (porém um pouco mais lento, mas com a vantagem de não precisar de derivada), e segue uma estratégia parecida com a da falsa posição (porém mais rápido, ao custo de nem sempre convergir).
+
+\subsection{Implementação}
+\begin{minted}{matlab}
+% Calcula a raiz usando o método da secante
+function x1 = secant(x0, x1, f, min_err, max_its)
+    for i = 1:max_its
+        % Verificar que a secante não é horizontal
+        % Caso seja, acontecerá divisão por 0
+        if (f(x0) == f(x1))
+            error("A secante não pode ter inclinação 0")
+        end
+        % Calcular novo termo
+        new = x1 - f(x1) * ( (x1 - x0)/(f(x1) - f(x0)) );
+        x0 = x1;
+        x1 = new;
+        if (abs(f(x1)) < min_err)
+            return;
+        end
+    end
+    error("Não foi possível convergir")
+end
+\end{minted}
+
+\subsection{Iterações manuais}
+\subsubsection{Primeira raiz}
+\begin{align*}
+    x_2 &= 2,1 - f(2,1) \cdot \frac{2,1 - 1,9}{f(2,1) - f(1,9)} = 1,939\\
+    x_3 &= 1,939 - f(1,939) \cdot \frac{1,939 - 2,1}{f(1,939) - f(2,1)} = 1,9518\\
+    x_4 &= 1,9518 - f(1,9518) \cdot \frac{1,9518 - 1,939}{f(1,9518) - f(1,939)} = 1,9585\\
+    x_5 &= 1,9585 - f(1,9585) \cdot \frac{1,9585 - 1,9518}{f(1,9585) - f(1,9518)} = 1,9582\\
+\end{align*}
+\subsubsection{Segunda raiz}
+\begin{align*}
+    x_2 &= 3,8 - f(3,8) \cdot \frac{3,8 - 3,5}{f(3,8) - f(3,5)} = 3,5931\\
+    x_3 &= 3,5931 - f(3,5931) \cdot \frac{3,5931 - 3,8}{f(3,5931) - f(3,8)} = 3,6372\\
+    x_4 &= 3,6372 - f(3,6372) \cdot \frac{3,6372 - 3,5931}{f(3,6372) - f(3,5931)} = 3,6912\\
+    x_5 &= 3,6912 - f(3,6912) \cdot \frac{3,6912 - 3,6372}{f(3,6912) - f(3,6372)} = 3,6759\\
+    x_6 &= 3,6759 - f(3,6759) \cdot \frac{3,6759 - 3,6912}{f(3,6759) - f(3,6912)} = 3,6779\\
+\end{align*}
+
+\subsection{5 Iterações}
+\subsubsection{Primeira raiz (\(1,958217684\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+\multicolumn{1}{l}{x0} & \multicolumn{1}{l}{x1} & \multicolumn{1}{l}{f(x1)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+1.9                    & 2.1                    & -0.7277797745             & \multicolumn{1}{l}{}              \\
+2.1                    & 1.93903                & 0.0628933                 & 3.12E-01                          \\
+1.93903                & 1.95183                & 0.0215173                 & 2.50E-02                          \\
+1.95183                & 1.95849                & -0.000931023              & 1.30E-02                          \\
+1.95849                & 1.95821                & 1.33E-05                  & 5.48E-04                         \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Segunda raiz (\(3.677963512\))}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+\multicolumn{1}{l}{x0} & \multicolumn{1}{l}{x1} & \multicolumn{1}{l}{f(x1)} & \multicolumn{1}{l}{Erro relativo} \\ \midrule
+3.5                    & 3.8                    & -1.952265695              & \multicolumn{1}{l}{}              \\
+3.8                    & 3.59311                & 0.528533                  & 7.43E-01                          \\
+3.59311                & 3.63718                & 0.290977                  & 1.60E-01                          \\
+3.63718                & 3.69118                & -0.115123                 & 1.99E-01                          \\
+3.69118                & 3.67587                & 0.0171614                 & 5.63E-02                         \\ \bottomrule
+\end{tabular}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+\end{document}

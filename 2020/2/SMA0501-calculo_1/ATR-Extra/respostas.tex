@@ -1,0 +1,681 @@
+\documentclass[12pt]{article}
+    \usepackage{amsmath}
+    \usepackage{amsthm}
+    \usepackage{amssymb}
+    \usepackage{systeme}
+    \usepackage{booktabs}
+    \usepackage{indentfirst}
+    \usepackage{mathtools}
+    \usepackage[portuguese]{babel}
+    \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+    %Reduce part, section and subsection font sizes
+    \usepackage[small]{titlesec}
+    \titleformat{\part}[display]
+      {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+    \usepackage{xpatch}
+    \renewcommand\thesubsubsection{\alph{subsubsection})}% chktex 9 chktex 10
+    \theoremstyle{definition}
+    \newtheorem*{definition}{Def}
+
+\title{SMA0501 - Cálculo I \\ ATR Extra}% chktex 8
+\author{Gabriel Fontes - 10856803}% chktex 8
+
+\begin{document}
+\maketitle
+
+\section{L'Hospital}
+\subsection{Sejam \(P(x)\) e \(Q(x)\) polinômios tais que \(P(x_0) = 0\), \(Q(x_0) = 0\) e \(Q'(x_0) \ne 0\). Mostre que \(\lim_{x\rightarrow x_0} \frac{P(x)}{Q(x)} = \frac{P'(x_0)}{Q'(x_0)}\):}
+
+\subsection{Sejam \(P(x)\) e \(Q(x\) polinômios tais que \(P(x_0) =P'(x_0) = 0\), \(Q(x_0) = Q'(x_0)=0\)}
+
+\subsection{Utilizando os exercícios 37 e 38, calcule:}
+\subsubsection{\(\lim_{x\rightarrow 1}\frac{x^{100}+x-2}{x^{99}-x}\)}
+\subsubsection{\(\lim_{x\rightarrow 1}\frac{x^3-x^2-x+1}{x^{10}-9x^2+8x}\)}
+\subsubsection{\(\lim_{x\rightarrow -1}\frac{x^5+3x+4}{x^{20}+3x+2}\)}
+\subsubsection{\(\lim_{x\rightarrow 1}\frac{x^4-2x^3+2x-1}{x^8-6x^6+8x^5-3x^4}\)}
+
+\subsection{Usando o exercício 40, calcule:}
+\subsubsection{\(\lim_{x\rightarrow 0}\frac{\ln{|x+1|}}{x^2+\sin{x}}\)}
+Vamos começar derivando o numerador e o denominador:
+\[
+    (\ln{(x+1)})' = \frac{1}{x+1}
+\]
+\[
+    (x^2+\sin{x})' = (x^2)' + (\sin{x})' = 2x + \cos{x}
+\]
+
+Pela regra de L'Hospital:
+
+\begin{align*}
+    \lim_{x\rightarrow 0}\frac{\ln{|x+1|}}{x^2+\sin{x}}
+    &= \frac{1}{x+1}\cdot\frac{1}{2x+\cos{x}} \\
+    &= \frac{1}{2x^2+x\cos{x}+2x+\cos{x}} \\
+    &= \frac{1}{0+\cos{0}} \\
+    &= 1
+\end{align*}
+
+\[
+    \boxed{
+        \therefore \lim_{x\rightarrow 0}\frac{\ln{|x+1|}}{x^2+\sin{x}} = 1
+    }
+\]
+
+\subsubsection{\(\lim_{x\rightarrow \frac{\pi}{2}} \frac{e^{2x-\pi}-1}{2\sin{x}+\sin{6x}-2}\)}
+Vamos começar derivando o numerador e o denominador:
+\[
+    (e^{2x-\pi}-1)' = 2e^{2x-\pi}
+\]
+\[
+    (2\sin{x}+\sin{6x}-2)' = 2\cos{x} + 6\cos{6x}
+\]
+Pela regra de L'Hospital:
+
+\begin{align*}
+    \lim_{x\rightarrow \frac{\pi}{2}} \frac{e^{2x-\pi}-1}{2\sin{x}+\sin{6x}-2}
+    &= \frac{2e^{2x-\pi}}{2\cos{x}+6\cos{6x}} \\
+    &= \frac{2e^0}{2\cos{(\frac{\pi}{2})} +6\cos{(3\pi)}} \\
+    &= \frac{2}{-6} \\
+    &= -\frac{1}{3}
+\end{align*}
+\[
+    \boxed{
+        \lim_{x\rightarrow \frac{\pi}{2}} \frac{e^{2x-\pi}-1}{2\sin{x}+\sin{6x}-2} = -\frac{1}{3}
+    }
+\]
+
+\subsubsection{\(\lim_{x\rightarrow -1} \frac{x\sqrt[3]{x+1}}{\sin{(\pi x^2)}}\)}
+Vamos começar derivando o numerador e o denominador:
+\begin{align*}
+    (x\sqrt[3]{x+1})'
+    &= (x)'\cdot \sqrt[3]{x+1} + x\cdot (\sqrt[3]{x+1})' \\
+    &= \sqrt[3]{x+1} + x\cdot \left((x+1)' \cdot \frac{1}{3} {(x+1)}^{\frac{1}{3}-1}\right) \\
+    &= \sqrt[3]{x+1} + x\cdot \left(\frac{1}{3} {(x+1)}^{-\frac{2}{3}}\right) \\
+    &= \sqrt[3]{x+1} + \frac{x}{{3(x+1)}^{\frac{2}{3}}}
+\end{align*}
+\begin{align*}
+    (\sin{(\pi x^2)})'
+    &= (\pi x^2)' \cdot \cos{(\pi x^2)} \\
+    &= 2x \pi \cos{(\pi x^2)}
+\end{align*}
+Pela regra de L'Hospital:
+
+\begin{align*}
+    \lim_{x\rightarrow -1} \frac{x\sqrt[3]{x+1}}{\sin{(\pi x^2)}}
+    &= \frac{\sqrt[3]{x+1} + \frac{x}{{3(x+1)}^{\frac{2}{3}}}}{2x \pi \cos{(\pi x^2)}} \\
+    &= \frac{\sqrt[3]{0} + \frac{-1}{{3(0)}^{\frac{2}{3}}}}{-2 \pi \cos{(\pi)}} \\
+    &= \frac{0 -\frac{1}{0}}{-2\pi \cos{(\pi)}} \\
+    &= -\frac{1}{0} \cdot \frac{1}{2\pi} \\
+    &= -\infty
+\end{align*}
+\[
+    \boxed{
+        \lim_{x\rightarrow -1} \frac{x\sqrt[3]{x+1}}{\sin{(\pi x^2)}} = -\infty
+    }
+\]
+
+\subsubsection{\(\lim_{x\rightarrow 0} \frac{x + \sqrt[3]{x^2+\sin{3x}}}{\ln{|x^2+x+1|}}\)}
+Vamos começar derivando o numerador e o denominador:
+\begin{align*}
+    (x + \sqrt[3]{x^2 + \sin{3x}})'
+    &= 1 + \frac{1}{3}{(\sin{3x}+x^2)}^{-\frac{2}{3}} \cdot (\sin{(3x)}+x^2)' \\
+    &= 1 + \frac{1}{3{(\sin{(3x)}+x^2)}^{\frac{2}{3}}} \cdot 3\cos{(3x)}+2x \\
+    &= 1 + \frac{3\cos{(3x) + 2x}}{3{(\sin{(3x)}+x^2)}^{\frac{2}{3}}}
+\end{align*}
+\begin{align*}
+    (\ln{|x^2+x+1|})'
+    &= \frac{1}{x^2+x+1} \cdot {(x^2+x+1)}' \\
+    &= \frac{2x+1}{x^2+x+1}
+\end{align*}
+Pela regra de L'Hospital:
+
+\begin{align*}
+    \lim_{x\rightarrow 0} \frac{x + \sqrt[3]{x^2+\sin{3x}}}{\ln{|x^2+x+1|}}
+    &= \frac{1 + \frac{3\cos{(3x) + 2x}}{3{(\sin{(3x)}+x^2)}^{\frac{2}{3}}}}{\frac{2x+1}{x^2+x+1}} \\
+    &= \frac{1 + \frac{3\cos{(0)}}{3{(\sin{(0)})}^{\frac{2}{3}}}}{\frac{1}{1}} \\
+    &= 1 + \frac{3\cos{(0)}}{3{(\sin{(0)})}^{\frac{2}{3}}} \\
+    &= 1 + \frac{3}{0^{\frac{2}{3}}} \\
+    &= \infty
+\end{align*}
+\[
+    \boxed{
+        \lim_{x\rightarrow 0} \frac{x + \sqrt[3]{x^2+\sin{3x}}}{\ln{|x^2+x+1|}} = \infty
+    }
+\]
+
+\subsubsection{\(\lim_{x\rightarrow 0} \frac{e^{-x^2}+x-1}{e^{4x}+x^5-1}\)}
+Vamos começar derivando o numerador e o denominador:
+\begin{align*}
+    (e^{-x^2}+x-1)'
+    &= (-x^2)' \cdot e^{-x^2} + 1 \\
+    &= - e^{-x^2}\cdot 2x + 1
+\end{align*}
+\[
+    (e^{4x}+x^5-1)' = 4 e^{4x} + 5x^4
+\]
+Pela regra de L'Hospital:
+
+\begin{align*}
+    \lim_{x\rightarrow 0} \frac{e^{-x^2}+x-1}{e^{4x}+x^5-1}
+    &= \frac{- e^{-x^2}\cdot 2x + 1}{4 e^{4x} + 5x^4} \\
+    &= \frac{(- 1\cdot 0) + 1}{4 e^{0} + 0^4} \\
+    &= \frac{1}{4} \\
+\end{align*}
+\[
+    \boxed{
+        \therefore \lim_{x\rightarrow 0} \frac{e^{-x^2}+x-1}{e^{4x}+x^5-1} = \frac{1}{4}
+    }
+\]
+
+\subsubsection{\(\lim_{x\rightarrow 1} \frac{\sin{(\sin{\pi x})}}{2-\sqrt{x}-\sqrt[3]{x^2}}\)}
+Vamos começar derivando o numerador e o denominador:
+\begin{align*}
+    (\sin{(\sin{(\pi x)})})'
+    &= \cos{(\sin{(\pi x)})} \cdot (\sin{(\pi x)})' \\
+    &= \cos{(\sin{(\pi x)})}\cos{(\pi x)} \cdot \pi
+\end{align*}
+\begin{align*}
+    (2-\sqrt{x}-\sqrt[3]{x^2})'
+    &= -\frac{2}{3}x^{-\frac{1}{3}}-\frac{1}{2}x^{-\frac{1}{2}} \\
+    &= -\frac{2}{3\sqrt[3]{x}} - \frac{1}{2\sqrt{x}}
+\end{align*}
+Pela regra de L'Hospital:
+
+\begin{align*}
+    \lim_{x\rightarrow 1} \frac{\sin{(\sin{\pi x})}}{2-\sqrt{x}-\sqrt[3]{x^2}}
+    &= \frac{\cos{(\sin{(\pi x)})}\cos{(\pi x)} \cdot \pi}{-\frac{2}{3\sqrt[3]{x}} - \frac{1}{2\sqrt{x}}} \\
+    &= \frac{\pi}{-\frac{2}{0} - \frac{1}{0}} \\
+    &= 0
+\end{align*}
+\[
+    \boxed{
+        \therefore \lim_{x\rightarrow 1} \frac{\sin{(\sin{\pi x})}}{2-\sqrt{x}-\sqrt[3]{x^2}} = 0
+    }
+\]
+
+\section{Integração por frações parciais}
+\subsection{\(\int{\frac{1}{(x+1)(x-1)}dx}\)}
+Vamos obter os coeficientes das frações parciais:
+
+\begin{align*}
+	\frac{1}{(x+1)(x-1)}
+	           & = \frac{A}{x+1} + \frac{B}{x-1}                \\
+	           & = \frac{A\cdot(x-1) + B\cdot(x+1)}{(x+1)(x-1)} \\
+	\implies 1 & = A\cdot(x-1) + B\cdot(x+1)                    
+\end{align*}
+
+Substituindo \( x =1\):
+\begin{align*}
+	1  & = A\cdot 0 + B \cdot 2 \\
+	2B & = 1                    \\
+	B  & = 0,5                  
+\end{align*}
+
+Substituindo \( x = -1\):
+\begin{align*}
+	1  & = A\cdot (-2) + B \cdot 0 \\
+	2A & = -1                      \\
+	A  & = -\frac{1}{2}            
+\end{align*}
+
+Agora podemos substituir na integral:
+
+\begin{align*}
+	\int{\frac{1}{(x+1)(x-1)}dx}
+	  & = \int{\frac{A}{x+1}dx} + \int{\frac{B}{x-1}dx}                         \\
+	  & = - \frac{1}{2}\int{\frac{1}{x+1}dx} + \frac{1}{2}\int{\frac{1}{x-1}dx} \\
+	  & = \frac{\ln{|x-1|}}{2} - \frac{\ln{|x+1|}}{2} + C                       
+\end{align*}
+
+\[
+	\boxed{
+		\therefore \int{\frac{1}{(x+1)(x-1)}dx} = \frac{\ln{|x-1|}-\ln{|x+1|}}{2} + C
+	}
+\]
+
+\subsection{\(\int{\frac{2x+3}{x(x-2)}dx}\)}
+Vamos obter os coeficientes:
+
+\begin{align*}
+	\frac{2x+3}{x(x-2)}
+	              & = \frac{A}{x} + \frac{B}{x-2}            \\
+	              & = \frac{A\cdot(x-2) + B \cdot x}{x(x-2)} \\
+	\implies 2x+3 & = A\cdot(x-2) + B \cdot x                
+\end{align*}
+
+Substituindo \(x = 0\):
+\begin{align*}
+	2\cdot 0 + 3 & = A\cdot (-2) + B \cdot 0 \\
+	-2A          & = 3                       \\
+	A            & = -\frac{3}{2}            
+\end{align*}
+
+Substituindo \( x = 2\):
+\begin{align*}
+	4 + 3 & = A \cdot 0 + B\cdot 2 \\
+	2B    & = 7                    \\
+	B     & = \frac{7}{2}          
+\end{align*}
+
+Agora podemos substituir na integral:
+
+\begin{align*}
+	\int{\frac{2x+3}{x(x-2)}dx}
+	  & = \int{\frac{A}{x}dx}+\int{\frac{B}{x-2}dx}                        \\
+	  & = -\frac{3}{2}\int{\frac{1}{x}dx}+\frac{7}{2}\int{\frac{1}{x-2}dx} \\
+	  & = \frac{7}{2}\ln{|x-2|} - \frac{3}{2}\ln{|x|} + C                  
+\end{align*}
+
+\[
+	\boxed{
+		\therefore \int{\frac{2x+3}{x(x-2)}dx} = \frac{7\ln{|x-2|}-3\ln{|x|}}{2} + C
+	}
+\]
+
+\subsection{\(\int{\frac{x}{x^2 - 4}dx}\)}
+Vamos obter os coeficientes:
+
+\begin{align*}
+    \frac{x}{x^2-4}
+    &= \frac{x}{(x+2)(x-2)} \\
+    &= \frac{A}{x+2} + \frac{B}{x-2} \\
+    &= \frac{A\cdot (x-2) + B\cdot (x+2)}{(x+2)(x-2)} \\
+    \implies x
+    &= A \cdot (x-2) + B \cdot (x+2)
+\end{align*}
+
+Substituindo \(x = -2 \):
+\begin{align*}
+    -2
+    &= A \cdot (-4) + B \cdot 0 \\
+    A &= \frac{1}{2}
+\end{align*}
+
+Substituindo \(x = 2\):
+\begin{align*}
+    2
+    &= A \cdot 0 + B \cdot 4 \\
+    B &= \frac{1}{2}
+\end{align*}
+
+Agora substituindo na integral:
+\begin{align*}
+    \int{\frac{x}{x^2-4}dx}
+    &= \int{\frac{A}{x+2}dx} + \int{\frac{B}{x-2}dx} \\
+    &= \frac{1}{2}\int{\frac{1}{x+2}dx} + \frac{1}{2}\int{\frac{1}{x-2}dx} \\
+    &= \frac{1}{2}\ln{|x+2|} + \frac{1}{2}\ln{|x-2|} + C
+\end{align*}
+
+\[
+    \boxed{
+        \therefore \int{\frac{x}{x^2-4}dx} = \frac{\ln{|x+2| + \ln{|x-2|}}}{2} + C
+    }
+\]
+
+\subsection{\(\int{\frac{1}{x^2-4}dx}\)}
+Vamos obter os coeficientes:
+
+\begin{align*}
+    \frac{1}{x^2-4}
+    &= \frac{1}{(x+2)(x-2)} \\
+    &= \frac{A}{x+2} + \frac{B}{x-2} \\
+    &= \frac{A\cdot (x-2) + B\cdot (x+2)}{(x+2)(x-2)} \\
+    \implies 1
+    &= A\cdot (x-2) + B\cdot (x+2)
+\end{align*}
+
+Substituindo \(x = -2\)
+\begin{align*}
+    1
+    &= A\cdot (-4) + B\cdot 0 \\
+    A &= -\frac{1}{4}
+\end{align*}
+
+Substituindo \(x = 2\)
+\begin{align*}
+    1
+    &= A \cdot 0 + B \cdot 4 \\
+    B &= \frac{1}{4}
+\end{align*}
+
+Agora substituindo na integral:
+\begin{align*}
+    \int{\frac{1}{x^2-4}dx}
+    &= \int{\frac{A}{x+2}dx} + \int{\frac{B}{x-2}dx} \\
+    &= - \frac{1}{4} \int{\frac{1}{x+2}dx} + \frac{1}{4} \int{\frac{1}{x-2}dx} \\
+    &= \frac{1}{4}\ln{|x-2|} - \frac{1}{4}\ln{|x+2|} + C
+\end{align*}
+
+\[
+    \boxed{
+        \therefore \int{\frac{1}{x^2-4}dx} = \frac{\ln{|x-2|}-\ln{|x+2|}}{4} + C
+    }
+\]
+
+\subsection{\(\int{\frac{5x+3}{x^2-3x+2}dx}\)}
+Vamos obter os coeficientes:
+
+\begin{align*}
+    \frac{5x+3}{x^2-3x+2}
+    &= \frac{5x+3}{(x-1)(x-2)} \\
+    &= \frac{A}{x-1} + \frac{B}{x-2} \\
+    &= \frac{A\cdot(x-2)+B\cdot(x-1)}{(x-1)(x-2)} \\
+    \implies 5x+3
+    &= A\cdot(x-2) + B\cdot(x-1)
+\end{align*}
+
+Substituindo por \(x = 1\)
+\begin{align*}
+    5+3 &= A\cdot(-1) + B \cdot 0 \\
+    A &= -8
+\end{align*}
+
+Substituindo por \(x = 2\)
+\begin{align*}
+    10+3 &= A \cdot 0 + B \\
+    B &= 13
+\end{align*}
+
+Agora substituindo na integral:
+\begin{align*}
+    \int{\frac{5x+3}{x^2-3x+2}dx}
+    &= \int{\frac{A}{x-1}dx} + \int{\frac{B}{x-2}dx} \\
+    &= -8\int{\frac{1}{x-1}dx} + 13\int{\frac{1}{x-2}dx}\\
+    &= 13\ln{|x-2|} - 8\ln{|x-1|} + C
+\end{align*}
+
+\[
+    \boxed{
+        \therefore \int{\frac{5x+3}{x^2-3x+2}dx} = 13\ln{|x-2|} - 8\ln{|x-1|} + C
+    }
+\]
+
+\subsection{\(\int{\frac{x+1}{x^2-x-2}dx}\)}
+Vamos obter os coeficientes:
+
+\begin{align*}
+    \frac{x+1}{x^2-x-2}
+    &= \frac{x+1}{(x+1)(x-2)} \\
+    &= \frac{A}{x+1} + \frac{B}{x-2} \\
+    &= \frac{A\cdot (x-2) + B\cdot (x+1)}{(x+1)(x-2)} \\
+    \implies x+1
+    &= A\cdot (x-2) + B\cdot (x+1)
+\end{align*}
+
+Substituindo \( x = -1 \)
+\begin{align*}
+    0
+    &= A\cdot(-3) + B \cdot 0 \\
+    A
+    &= 0
+\end{align*}
+
+Substituindo \( x = 2 \)
+\begin{align*}
+    3 &= A \cdot 0 + B \cdot 3 \\
+    B &= 1
+\end{align*}
+
+Agora substituindo na integral:
+\begin{align*}
+    \int{\frac{x+1}{x^2-x-2}dx}
+    &= \int{\frac{A}{x+1}dx} + \int{\frac{B}{x-2}dx} \\
+    &= 0\int{\frac{1}{x+1}dx} + 1\int{\frac{1}{x-2}dx} \\
+    &= \ln{|x-2|}
+\end{align*}
+
+\[
+    \boxed{
+        \therefore \int{\frac{x+1}{x^2-x-2}dx} = \ln{|x-2|}
+    }
+\]
+
+\subsection{\(\int{\frac{2}{x^2-5x+6}dx}\)}
+Vamos obter os coeficientes:
+
+\begin{align*}
+    \frac{2}{x^2-5x+6}
+    &= \frac{2}{(x-2)(x-3)} \\
+    &= \frac{A}{x-2} + \frac{B}{x-3} \\
+    &= \frac{A\cdot (x-3) + B\cdot(x-2)}{(x-2)(x-3)} \\
+    \implies 2
+    &= A\cdot (x-3) + B\cdot(x-2)
+\end{align*}
+
+Substituindo \( x = 2 \)
+\begin{align*}
+    2 &= A \cdot (-1) + B \cdot 0 \\
+    A &= -2
+\end{align*}
+
+Substituindo \( x = 3 \)
+\begin{align*}
+    2 &= A \cdot 0 + B \cdot 1 \\
+    B &= 2
+\end{align*}
+
+Agora substituindo na integral:
+\begin{align*}
+    \int{\frac{2}{x^2-5x+6}dx}
+    &= \int{\frac{A}{x-2}dx} + \int{\frac{B}{x-3}dx} \\
+    &= -2\int{\frac{1}{x-2}dx} + 2 \int{\frac{1}{x-3}dx} \\
+    &= 2\ln{|x-3|} - 2 \ln{|x-2|} + C
+\end{align*}
+
+\[
+    \boxed{
+        \int{\frac{2}{x^2-5x+6}dx} = 2(\ln{|x-3|} - \ln{|x-2|}) + C
+    }
+\]
+
+\subsection{\(\int{\frac{x-3}{x^2+3x+2}dx}\)}
+Vamos obter os coeficientes:
+
+\begin{align*}
+    \frac{x-3}{x^2+3x+2}
+    &= \frac{x-3}{(x+1)(x+2)} \\
+    &= \frac{A}{x+1} + \frac{B}{x+2} \\
+    &= \frac{A\cdot(x+2) + B\cdot (x+1)}{(x+1)(x+2)} \\
+    \implies x-3
+    &= A\cdot(x+2) + B\cdot (x+1)
+\end{align*}
+
+Substituindo \( x = -1 \)
+\begin{align*}
+    -4 &= A\cdot 1 + B \cdot 0 \\
+    A &= -4
+\end{align*}
+
+Substituindo \( x = -2 \)
+\begin{align*}
+    -5 &= A \cdot 0 + B \cdot (-1) \\
+    B &= 5
+\end{align*}
+
+Agora substituindo na integral:
+\begin{align*}
+    \int{\frac{x-3}{x^2+3x+2}dx}
+    &= \int{\frac{A}{x+1}dx} + \int{\frac{B}{x+2}dx} \\
+    &= -4\int{\frac{1}{x+1}dx} + 5\int{\frac{1}{x+2}dx} \\
+    &= 5\ln{|x+2|} - 4\ln{|x+1|} + C
+\end{align*}
+
+\[
+    \boxed{
+        \int{\frac{x-3}{x^2+3x+2}dx} = 5\ln{|x+2|} - 4\ln{|x+1|} + C
+    }
+\]
+
+\section{Integração por partes}
+\subsection{\(\int_0^1 x e^x dx\)}
+Vamos começar obtendo a antiderivada. Usando partes:
+\begin{align*}
+	f := x & \text{, } g' := e^x \\
+	f' = 1 & \text{, } g = e^x   
+\end{align*}
+\begin{align*}
+	\int f g'
+	  & = fg - \int f' g     \\
+	\int xe^x dx
+	  & = xe^x - \int e^x dx \\
+	  & = xe^x - e^x + C     \\
+	  & = (x-1) e^x + C      
+\end{align*}
+
+Agora vamos calcular a integral definida:
+
+\begin{align*}
+	\bigg\rvert_0^1 ((x-1) e^x + C)
+	  & = ((1-1) e^1 + C) - ((0-1) e^0 + C) \\
+	  & = (0 + C) - (- 1 + C)               \\
+	  & = 1                                 
+\end{align*}
+
+\[
+	\boxed{
+		\therefore \int_0^1 x e^x dx = 1
+	}
+\]
+\subsection{\(\int_1^2 \ln{x} dx\)}
+Usando partes:
+
+\begin{align*}
+	f := \ln{x}\text{, } g' := 1    \\
+	f' = \frac{1}{x}\text{, } g = x 
+\end{align*}
+\begin{align*}
+	\int f g'
+	  & = fg - \int f' g                                    \\
+	\int \ln{x}
+	  & = \ln{x}\cdot x - \int \frac{1}{x} \cdot x \cdot dx \\
+	  & = x \ln{x} - \int 1 dx                              \\
+	  & = x \ln{x} - (x + C)                                \\
+	  & = x \ln{x} - x + C                                  
+\end{align*}
+
+Agora vamos calcular a definida:
+
+\begin{align*}
+	\bigg\rvert_1^2 (\ln{x} - x + C)
+	  & = (2\ln{2} - 2 + C) - (\ln{1} - 1 + C) \\
+	  & = (2\ln{2} - 2) + 1                    \\
+	  & = 2\ln{2} - 1                          
+\end{align*}
+
+\[
+	\boxed{
+		\therefore \int_1^2 \ln{x} dx = 2\ln{2} - 1
+	}
+\]
+\subsection{\(\int_0^{\frac{\pi}{2}} e^x \cos{x} dx\)}
+Usando partes:
+\begin{align*}
+	f := \cos{x}\text{, } g' := e^x \\
+	f' = -\sin{x}\text{, } g = e^x  
+\end{align*}
+\begin{align*}
+	\int f g'
+	  & = fg - \int f' g                                 \\
+	\int{e^x \cos{x} dx}
+	  & = \cos{x}\cdot e^x - \int{-\sin{x} \cdot e^x dx} 
+\end{align*}
+
+Usando partes mais uma vez:
+\begin{align*}
+	f := -\sin{x}\text{, } g' := e^x \\
+	f' = -\cos{x}\text{, } g = e^x   
+\end{align*}
+\begin{align*}
+	\int f g'
+	  & = fg - \int f' g                                 \\
+	\int{-\sin{x} \cdot e^x dx}
+	  & = -\sin{x}\cdot e^x - \int{-\cos{x}\cdot e^x dx} 
+\end{align*}
+
+Juntando os dois:
+
+\begin{align*}
+	\int{e^x\cos{x}dx}
+	  & = \cos{x}\cdot e^x - \left(-\sin{x}\cdot e^x-\int{-\cos{x}\cdot e^x dx}\right) \\
+	  & = \cos{x}\cdot e^x + \sin{x}\cdot e^x - \int{e^x \cos{x} dx}                   
+\end{align*}
+\begin{align*}
+	2 \int{e^x\cos{x}dx} & = e^x \cdot (\cos{x}+\sin{x}) + C           \\
+	\int{e^x\cos{x}dx}   & = \frac{e^x \cdot (\cos{x}+\sin{x})}{2} + C 
+\end{align*}
+
+Agora calculando a integral definida:
+
+\begin{align*}
+	  &\bigg\rvert_0^{\frac{\pi}{2}} \left(\frac{e^x \cdot (\cos{x}+\sin{x})}{2}\right) \\
+	  & = \left(\frac{e^{\frac{\pi}{2}} \cdot (\cos{\frac{\pi}{2}}+\sin{\frac{\pi}{2}})}{2} + C\right) - \left(\frac{e^{0} \cdot (\cos{0}+\sin{0})}{2} + C\right) \\ % chktex 464
+	  & = \left(\frac{e^{\frac{\pi}{2}} \cdot (0+1)}{2}\right) - \left(\frac{e^{0} \cdot (1+0)}{2}\right)                                                 \\
+	  & = \frac{e^{\frac{\pi}{2}}}{2} - \frac{1}{2}                                                                                                       
+\end{align*}
+
+\[
+	\boxed{
+		\therefore \int_0^{\frac{\pi}{2}} e^x \cos{x} dx= \frac{e^{\frac{\pi}{2}}}{2} - \frac{1}{2}
+	}
+\]
+\subsection{\(\int_0^x t^2 e^{-st} dt\text{, }(s\ne 0)\)}
+Usando partes:
+\begin{align*}
+	f := t^2 & \text{, } g' := e^{-st}          \\
+	f' = 2t  & \text{, } g = -\frac{e^{-st}}{s} 
+\end{align*}
+\begin{align*}
+	\int f g'
+	  & = fg - \int f' g                                            \\
+	\int{t^2 e^{-st} dt}
+	  & = -\frac{t^2e^{-st}}{s} - \int{-\frac{2te^{-st}}{s}dt}      \\
+	  & = -\frac{t^2e^{-st}}{s} +\frac{2}{s} \cdot \int{te^{-st}dt} 
+\end{align*}
+
+Vamos integrar por partes, mais uma vez:
+\begin{align*}
+	f := t & \text{, } g' := e^{-st}          \\
+	f' = 1 & \text{, } g = -\frac{e^{-st}}{s} 
+\end{align*}
+\begin{align*}
+	\int f g'
+	  & = fg - \int f' g                                    \\
+	\int{te^{-st}dt}
+	  & = - \frac{te^{-st}}{s} - \int{-\frac{e^{-st}}{s}dt} 
+\end{align*}
+
+Regra da substituição:
+
+\[
+	u := -st \implies \frac{du}{dt} = -s \implies dt = -\frac{1}{s}du
+\]
+\[
+	\int{-\frac{e^{-st}}{s}dt} = \int{\frac{e^u}{s^2}du} = \frac{1}{s^2}\int{e^u du} = \frac{e^u}{s^2} = \frac{e^{-st}}{s^2}
+\]
+
+Juntando tudo:
+
+\begin{align*}
+	\int{t^2 e^{-st} dt}
+	  & = -\frac{t^2e^{-st}}{s} +\frac{2}{s} \cdot \int{te^{-st}dt}                                                         \\
+	  & = -\frac{t^2e^{-st}}{s} +\frac{2}{s} \cdot \left(- \frac{te^{-st}}{s} - \int{-\frac{e^{-st}}{s}dt}\right)           \\
+	  & = -\frac{t^2e^{-st}}{s} +\frac{2}{s} \cdot \left(- \frac{te^{-st}}{s} - \left(\frac{e^{-st}}{s^2} + C\right)\right) \\
+	  & = -\frac{t^2e^{-st}}{s} - \frac{2te^{-st}}{s^2}-\frac{2e^{-st}}{s^3} + C                                            \\
+	  & = - \frac{(st(st+2)+2)e^{-st}}{s^3}+C                                                                               
+\end{align*}
+
+Por fim, vamos calcular os valores da antiderivada para obter a integral definida:
+\begin{align*}
+	  & \bigg\rvert^x_0 \left(- \frac{(st(st+2)+2)e^{-st}}{s^3}+C\right)                                      \\
+	  & = \left(- \frac{(sx(sx+2)+2)e^{-sx}}{s^3}+C\right) - \left(- \frac{(s0(s0+2)+2)e^{-s0}}{s^3}+C\right) \\
+	  & = \left(\frac{(s0(s0+2)+2)e^{-s0}}{s^3}+C\right) - \left(\frac{(sx(sx+2)+2)e^{-sx}}{s^3}+C\right)     \\
+	  & = \left(\frac{2}{s^3}+C\right) - \left(\frac{(sx(sx+2)+2)e^{-sx}}{s^3}+C\right)                       \\
+	  & = \frac{2}{s^3}-\frac{(s^2x^2+2sx+2)e^{-sx}}{s^3}                                                     
+\end{align*}
+
+\[
+	\boxed{
+		\therefore \int^x_0{t^2 e^{-st} dt } = \frac{2}{s^3}-\frac{(s^2x^2+2sx+2)e^{-sx}}{s^3}
+	}
+\]
+
+\end{document}

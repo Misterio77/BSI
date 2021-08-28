@@ -1,0 +1,227 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{xstring}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{minted}
+\usepackage{float}
+\pgfplotsset{compat=newest}
+
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+{\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SME0500 \\ Cálculo Numérico \\ Atividade 5}
+\author{Gabriel Silva Fontes | 10856803}
+\begin{document}
+\maketitle
+
+\section{Interpolação de Lagrange (exercício 9)}
+Dada a função \(y = \sin{(\pi x)}\), construíremos o polinômio de interpolação, utilizando interpolação de Lagrange, nos pontos \((0, 0)\), \((\frac{1}{6}, \frac{1}{2})\), e \((\frac{1}{2}, 1)\).
+
+\begin{align*}
+	p(x)
+	 & = 0\cdot\frac{(x-\frac{1}{6})\cdot(x-\frac{1}{2})}{(0-\frac{1}{6})\cdot(0-\frac{1}{2})}
+	+\frac{1}{2}\cdot\frac{(x-0)\cdot(x-\frac{1}{2})}{(\frac{1}{6}-0)\cdot(\frac{1}{6}-\frac{1}{2})}
+	+1\cdot\frac{(x-0)\cdot(x-\frac{1}{6})}{(\frac{1}{2}-0)\cdot(\frac{1}{2}-\frac{1}{6})}     \\
+	 & = 0 -9\cdot(x-0)\cdot(x-\frac{1}{2}) + 6\cdot(x-0)\cdot(x-\frac{1}{6})                  \\
+	 & = - 9\cdot(x^2 -\frac{x}{2}) + 6\cdot(x^2-\frac{x}{6})                                  \\
+	 & = - 3x^2 + \frac{7\cdot x}{2}
+\end{align*}
+
+Vamos, então, plotar a função original (azul), o polinômio (vermelho), os pontos que utilizamos (preto), e os pontos \(p(0.4)\) e \(p(1)\) (em verde e magenta, respectivamente):
+
+\begin{center}
+	\begin{tikzpicture}[scale=2]
+		\begin{axis}
+			[width=6cm,
+				height=6cm,
+				ticklabel style={font=\tiny},
+				grid=both,
+				trig format=rad,
+				grid style={line width=.1pt, draw=gray!10},
+				major grid style={line width=.2pt,draw=gray!50},
+				axis lines=middle,
+				xmin=-1.5,xmax=1.5,ymin=-1.5,ymax=1.5,
+				samples=200,
+			]
+			\addplot[red] {(7*x/2)-(3*x^2)};
+			\addplot[blue] {sin(pi*x)};
+			\node[circle,fill,inner sep=1pt] at (axis cs:0,0) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:1/6,1/2) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:1/2,1) {};
+			\node[circle,fill=green,inner sep=1pt] at (axis cs:0.4,0.92) {};
+			\node[circle,fill=magenta,inner sep=1pt] at (axis cs:1,0.5) {};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+Como esperado, os pontos utilizados ficam certinhos. \(p(0.4)\) ficou bem próximo de onde ficaria \(f(0.4)\), enquanto \(p(1)\) teve um erro bem considerável.
+
+\medskip
+
+Como melhorar a aproximação no ponto \(1\)? Bem, é só incluir o ponto \((1,0)\) no cálculo do polinômio. A conta ficará consideravelmente mais complicada, mas teremos uma aproximação cada vez mais parecida com a função.
+
+\section{Interpolação de Newton (exercício 11)}
+
+\subsection{Dois pontos}
+Vamos começar calculando um polinômio linear, com 2 pontos apenas:
+
+\begin{table}[H]
+	\begin{tabular}{@{}rrl@{}}
+		\toprule
+		\multicolumn{1}{l}{x} & \multicolumn{1}{l}{f (x)} &                          \\ \midrule
+		0                     & 1                         & \multicolumn{1}{r}{-0.5} \\
+		1                     & 0.5                       &                          \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+Que nos permite obter o polinômio \(p_1\):
+\[
+	p_1(x) = 1 - 0.5x
+\]
+
+Sendo assim:
+\[\boxed{p_1(0.5) = 0.75}\]
+
+\subsection{Três pontos}
+Agora faremos o mesmo, mas com três pontos:
+
+\begin{table}[H]
+	\begin{tabular}{@{}rrll@{}}
+		\toprule
+		\multicolumn{1}{l}{x} & \multicolumn{1}{l}{f (x)} &                          &                         \\ \midrule
+		0                     & 1                         & \multicolumn{1}{r}{-0.5} & \multicolumn{1}{r}{0.2} \\
+		1                     & 0.5                       & \multicolumn{1}{r}{-0.2} &                         \\
+		1.5                   & 0.4                       &                          &                         \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+Que nos retorna o polinômio \(p_2\):
+\begin{align*}
+	p_2(x)
+	 & = 0.2(x-1)x - 0.5x + 1 \\
+	 & = 0.2x^2 - 0.7x + 1
+\end{align*}
+
+Sendo assim:
+\[\boxed{p_2(0.5) = 0.7}\]
+
+\subsection{Gráfico e comparação}
+\begin{center}
+	\begin{tikzpicture}[scale=2]
+		\begin{axis}
+			[width=6cm,
+				height=6cm,
+				ticklabel style={font=\tiny},
+				grid=both,
+				trig format=rad,
+				grid style={line width=.1pt, draw=gray!10},
+				major grid style={line width=.2pt,draw=gray!50},
+				axis lines=middle,
+				xmin=-1,xmax=4,ymin=-1,ymax=2,
+				samples=200,
+			]
+			\addplot[blue] {1-(0.5*x)};
+			\addplot[red] {(0.2*x^2)-(0.7*x)+1};
+			\addplot[orange] coordinates {(0.5,-10)(0.5,10)};
+			\node[circle,fill,inner sep=1pt] at (axis cs:0,1) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:1,0.5) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:1.5,0.4) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:2.5,0.286) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:3.0,0.25) {};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+A aproximação à \(f(0.5)\) parece convergir. Esperamos que polinômios de grau maior gerem aproximações melhores, mas não consguimos ter certeza (visto que não temos \(f\) para comparar). Vamos calcular mais graus em seguida para constatar essa convergência.
+
+\subsection{Mais pontos\dots}
+
+\subsubsection{Calcular \(p_3\)}
+\begin{table}[H]
+	\begin{tabular}{@{}rrrll@{}}
+		\toprule
+		\multicolumn{1}{l}{x} & \multicolumn{1}{l}{f (x)} & \multicolumn{1}{l}{} &                                   &                                    \\ \midrule
+		0                     & 1                         & -0.5                 & \multicolumn{1}{r}{0.2}           & \multicolumn{1}{r}{-0.05706666667} \\
+		1                     & 0.5                       & -0.2                 & \multicolumn{1}{r}{0.05733333333} &                                    \\
+		1.5                   & 0.4                       & -0.114               &                                   &                                    \\
+		2.5                   & 0.286                     & \multicolumn{1}{l}{} &                                   &                                    \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+Assim, temos:
+\begin{align*}
+	p_3
+	 & = -0.0570667(x - 1.5)(x - 1)x + 0.2(x - 1)x - 0.5x + 1 \\
+	 & = -0.0570667x^3 + 0.342667x^2 - 0.7856x + 1
+\end{align*}
+\[\boxed{p_3(0.5) = 0.6857}\]
+
+
+
+\subsubsection{Calcular \(p_4\)}
+
+\begin{table}[H]
+	\begin{tabular}{@{}rrrlll@{}}
+		\toprule
+		\multicolumn{1}{l}{x} & \multicolumn{1}{l}{f (x)} & \multicolumn{1}{l}{} &                                   &                                    &                                   \\ \midrule
+		0                     & 1                         & -0.5                 & \multicolumn{1}{r}{0.2}           & \multicolumn{1}{r}{-0.05706666667} & \multicolumn{1}{r}{0.01413333333} \\
+		1                     & 0.5                       & -0.2                 & \multicolumn{1}{r}{0.05733333333} & \multicolumn{1}{r}{-0.01466666667} &                                   \\
+		1.5                   & 0.4                       & -0.114               & \multicolumn{1}{r}{0.028}         &                                    &                                   \\
+		2.5                   & 0.286                     & -0.072               &                                   &                                    &                                   \\
+		3                     & 0.25                      & \multicolumn{1}{l}{} &                                   &                                    &                                   \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+Assim:
+\begin{align*}
+	p_4(x)
+	 & = 0.0141333(x-2.5)(x-1.5)(x-1)x                        \\
+	 & - 0.0570667(x-1.5)(x-1)x + 0.2(x-1)x - 0.5x + 1        \\
+	 & = 0.0141333x^4 - 0.127733x^3 + 0.4522x^2 - 0.8386x + 1
+\end{align*}
+\[\boxed{p_4(0.5) = 0.6787}\]
+
+\subsubsection{Gráfico}
+
+\begin{center}
+	\begin{tikzpicture}[scale=2]
+		\begin{axis}
+			[width=6cm,
+				height=6cm,
+				ticklabel style={font=\tiny},
+				grid=both,
+				trig format=rad,
+				grid style={line width=.1pt, draw=gray!10},
+				major grid style={line width=.2pt,draw=gray!50},
+				axis lines=middle,
+				xmin=-1,xmax=4,ymin=-1,ymax=2,
+				samples=200,
+			]
+			\addplot[blue] {1-(0.5*x)};
+			\addplot[red] {(0.2*x^2)-(0.7*x)+1};
+			\addplot[green] {-0.0570667*x^3 + 0.342667*x^2 - 0.7856*x + 1};
+			\addplot[magenta] {0.0141333*x^4 - 0.127733*x^3 + 0.4522*x^2 - 0.8386*x + 1};
+			\addplot[orange] coordinates {(0.5,-10)(0.5,10)};
+			\node[circle,fill,inner sep=1pt] at (axis cs:0,1) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:1,0.5) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:1.5,0.4) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:2.5,0.286) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:3.0,0.25) {};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+Como esperado, estamos aproximando uma convergência. Que também é visível no gráfico. Sendo assim, podemos concluir que mais pontos dão uma aproximação melhor.
+
+\end{document}

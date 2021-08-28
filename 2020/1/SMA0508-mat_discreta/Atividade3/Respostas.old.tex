@@ -1,0 +1,25 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+\newcommand{\bftab}{\fontseries{b}\selectfont}
+
+\title{SMA0508 - Matemática Discreta \\ Atividade 3 (Parte 2)}
+\author{Gabriel Fontes - 10856803}
+
+\begin{document}
+\maketitle
+Como enunciado, temos $A = \{p_1, ..., p_k\}$, um conjunto de primos positivos. Além disso, temos $n = p_1...p_k+1$.
+\medskip
+
+Queremos provar que existe um primo positivo $p$ tal que $p \notin A$.
+Como $n-1$ é composto por um ou mais números primos (que são, por definição, $>1$), sabemos que $n > 2$. Dessa maneira, pela definição de números primos, $n$ deve ser, exclusivamente, um número primo ou um número composto.
+\medskip
+
+Todo número
+Para o caso de $n$ ser primo, claramente existe um primo $p$ que divide $n$, que é ele mesmo. Suponha por absurdo que $p \in A$. Por consequência, $p$ obrigatoriamente divide $p_1...p_k$. Para que $p$ divida $p_1...p_k$ e $n$ ao mesmo tempo, ele também precisa dividir $1$, coisa que não é possível para um primo, absurdo.  Provamos assim que, para $n$ primo, existe um primo $p$ tal que $p \notin A$.
+
+Para o caso de $n$ ser um número composto, existe um primo $p$ que o divide. Supondo por absurdo que $p \in A$, $p$ obrigatoriamente divide $p_1...p_k$. Já que $p$ divide $n$ e também 
+\end{document}

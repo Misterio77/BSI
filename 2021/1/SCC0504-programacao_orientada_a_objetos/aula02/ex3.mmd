@@ -1,0 +1,64 @@
+classDiagram
+
+class Operator {
+    +name: String
+    +workplace: &Airport
+    +reserve(&Flight, &Passenger)
+    +cancel(&Reservation, &Passenger)
+}
+Operator --o Airport
+
+class Passenger {
+    +name: String
+    +cpf: u64
+    +reservations: Vec<Reservations>
+    +reserve(&Flight) Reservation
+    +pay(&Reservation)
+    +cancel(&Reservation)
+}
+Passenger --* Reservation
+
+class Reservation {
+    +flight: &Flight
+    +paid: bool
+}
+Reservation --o Flight
+
+class Flight {
+    +date_time: DateTime
+    +start_airport: &Airport
+    +end_airport: &Airport
+    +scope: FlightScope
+    +kind: FlightKind
+    +free_seats: u32
+    +crew: Vec<&Attendant>
+}
+Flight --* FlightKind
+Flight --* FlightScope
+Flight --o Airport
+Flight --o Attendant
+
+class FlightScope {
+    <<enumeration>>
+    International
+    Domestic
+}
+
+class FlightKind {
+    <<enumeration>>
+    Millitary
+    Commercial
+}
+
+
+class Airport {
+    +name: String
+    +city: String
+    +takeoffs_hour: u16
+}
+
+class Attendant {
+    +name: String
+    +last_location: &Airport
+}
+Attendant --o Airport

@@ -1,0 +1,27 @@
+fn main() -> Result<()> {
+    // Inicializar stdin
+    let stdin = stdin();
+    // Travar stdin e ler input
+    // (estados, estados iniciais, estados aceitos, transições, e cadeias)
+    let input = Input::from_reader(&mut stdin.lock())?;
+
+    // Criar automato com os dados recebidos
+    let automaton = Automaton::new(
+        &input.states,
+        &input.initial_states,
+        &input.accepted_states,
+        &input.transitions,
+    )?;
+
+    // Para cada cadeia
+    for chain in input.chains {
+        // Verificar se aceita ou rejeita
+        if automaton.verify_chain(&chain) {
+            println!("aceita")
+        } else {
+            println!("rejeita")
+        }
+    }
+
+    Ok(())
+}

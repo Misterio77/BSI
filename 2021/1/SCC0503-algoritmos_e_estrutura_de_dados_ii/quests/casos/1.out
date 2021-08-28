@@ -1,0 +1,79 @@
+Quest{
+	ID= '10'
+	name= 'Hello, World!'
+	description= 'Get to the starter town and talk to the villagers'
+}
+
+Quest{
+	ID= '0'
+	name= 'Slime Killer'
+	description= 'You must kill 10 slimes'
+}
+
+Quest{
+	ID= '1'
+	name= 'The Woodcutter'
+	description= 'Find and talk to Greyson, the woodcutter'
+}
+
+Quest{
+	ID= '2'
+	name= 'A New Axe'
+	description= 'Search for the legendary axe for Greyson'
+}
+
+Quest{
+	ID= '3'
+	name= 'The Blacksmith'
+	description= 'Find and talk to Clint, the blacksmith'
+}
+
+Quest{
+	ID= '4'
+	name= 'Hammer of Doom'
+	description= 'Search for the legendary hammer for Clint'
+}
+
+Quest{
+	ID= '11'
+	name= 'Slime's Revenge'
+	description= 'The slime Queen wants revenge for her minions'
+}
+
+Quest{
+	ID= '8'
+	name= 'Elder Care'
+	description= 'Help the village Elder'
+}
+
+Quest{
+	ID= '9'
+	name= 'Second Intentions'
+	description= 'Make the Elder tell you about the Demon Lord'
+}
+
+Quest{
+	ID= '5'
+	name= 'Hell's Door'
+	description= 'You must find the entrance to the Demon Lord's Castle'
+}
+
+Quest{
+	ID= '6'
+	name= 'Cleaning the House'
+	description= 'Kill all the guardians of the Demon Lord'
+}
+
+Quest{
+	ID= '7'
+	name= 'Showdown'
+	description= 'Face the last fierce battle and kill the Demon Lord'
+}
+
+Quest{
+	ID= '12'
+	name= 'Duel Time!'
+	description= 'Win the card minigame tournament'
+}
+
+

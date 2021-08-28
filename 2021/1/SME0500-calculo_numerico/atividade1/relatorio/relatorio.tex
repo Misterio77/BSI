@@ -1,0 +1,149 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+
+
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]{\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+\renewcommand{\thesubsection}{\alph{subsection})} %chktex 9 chktex 10
+
+
+\title{SME0500 \\ Cálculo Numérico \\ Atividade 1}
+\author{Gabriel Silva Fontes | 10856803}
+\begin{document}
+\maketitle
+\section*{4.}
+\subsection{\(L\) e \(D\) em termos de \(A\)}
+Os elementos de \(L\) e \(D\) podem ser escritos em termos dos elementos de \(A\) com as seguintes definições:
+\begin{align*}
+    D_j &= A_{jj} - \sum_{k=1}^{j-1}L^2_{jk} D_k \\
+    L_{ij} &= \frac{1}{D_j} \left( A_{ij} - \sum_{k=1}^{j-1} L_{ik} L_{jk} D_k \right)
+\end{align*}
+
+\subsection{Relacionar Cholesky e LDLT}
+Tomando uma decomposição LDLT, podemos relacionar à uma decomposição de Cholesky \(A = LL^T\) com essa relação:
+\[
+    A = LDL^T = LD^{1/2} {(D^{1/2})}^T L^T = LD^{1/2} {(LD^{1/2})}^T
+\]
+
+De forma análoga, é possível partir de uma decomposição \(A = HH^T\), tomando \(S\) como a matriz diagonal com a diagonal principal de \(H\):
+
+\begin{align*}
+    L &= HS^{-1} \\
+    D &= S^2
+\end{align*}
+
+\subsection{Resolver \(Ax = b\)}
+Vamos tomar o seguinte sistema (caso 1 do run.codes):
+\begin{align*}
+    A \cdot x &= b \\
+    \begin{bmatrix}
+        101 & 71 & 53 \\
+         71 & 83 & 71 \\
+         53 & 71 & 101
+    \end{bmatrix}
+    \begin{bmatrix}
+        x_1 \\
+        x_2 \\
+        _3
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        1\\
+        2\\
+        3
+    \end{bmatrix}
+\end{align*}
+
+Começando decompondo \(A\) em \(LDL^T\):
+\begin{align*}
+    A &= LDL^T \\
+    A &=
+    \begin{bmatrix}
+        1 & 0 & 0 \\
+        0.7030 & 1 & 0 \\
+        0.5248 & 1.0197 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+        101 & 0 & 0 \\
+        0 & 33.089 & 0 \\
+        0 & 0 & 38.779
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & 0.7030 & 0.5248 \\
+        0 & 1 & 1.0197 \\
+        0 & 0 & 1
+    \end{bmatrix}
+\end{align*}
+
+Daí, resolvemos \(Ly = b\) com substituição progressiva:
+\begin{align*}
+    Ly &= b \\
+    \begin{bmatrix}
+        101 & 0 & 0 \\
+        0 & 33.089 & 0 \\
+        0 & 0 & 38.779
+    \end{bmatrix}
+    \begin{bmatrix}
+        y_1 \\
+        y_2 \\
+        y_3
+    \end{bmatrix}
+    &=
+    \begin{bmatrix}
+        1 \\
+        2 \\
+        3
+    \end{bmatrix} \\
+    y &=
+    \begin{bmatrix}
+        1 \\
+        1.297 \\
+        1.1526
+    \end{bmatrix}
+\end{align*}
+
+Por fim, resolvemos \((D\cdot L^T)x = y\) com substituição regressiva:
+\begin{align*}
+    (D\cdot L^T)x &= y \\
+    \left(\begin{bmatrix}
+        101 & 0 & 0 \\
+        0 & 33.089 & 0 \\
+        0 & 0 & 38.779
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+        1 & 0.703 & 0.5248 \\
+        0 & 1 & 1.0197 \\
+        0 & 0 & 1
+    \end{bmatrix}
+    \right)
+    \begin{bmatrix}
+        x_1 \\
+        x_2 \\
+        _3
+    \end{bmatrix}
+    &= 
+    \begin{bmatrix}
+        1 \\
+        1.297 \\
+        1.1526
+    \end{bmatrix} \\
+    x &=
+    \begin{bmatrix}
+        -0.0119 \\
+         0.0089 \\
+         0.0297
+    \end{bmatrix}
+\end{align*}
+
+Que é o \(x\) que buscávamos.
+
+
+\end{document} %  chktex 17

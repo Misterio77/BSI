@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SME0500 \\ Cálculo Numérico \\ Atividade 2}
+\author{Gabriel Silva Fontes | 10856803}
+\begin{document}
+\maketitle
+\section{Algoritmo de Thomas}
+O método de Thomas deve ser aplicado em matrizes tridiagonais (esse tipo de matriz surge na resolução de PVC pelo método de diferenças finitas de EDP com métodos implícitos) e pode ser representada da seguinte forma:
+\[
+    \begin{bmatrix}
+        b_1 & c_1 &        &        & 0     \\
+        a_2 & b_2 & c_2    &        &       \\
+            & a_3 & b_3    & \ddots &       \\
+            &     & \ddots & \ddots & c_n-1 \\
+        0   &     &        & a_n    & b_n   \\
+    \end{bmatrix}
+    \cdot
+    \begin{bmatrix}
+        x_1 \\
+        x_2 \\
+        x_3 \\
+        \vdots \\
+        x_n
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        d_1 \\
+        d_2 \\
+        d_3 \\
+        \vdots \\
+        x_n
+    \end{bmatrix}
+\]
+
+Onde os elementos \(a_i\) são os que ficam abaixo da diagonal principal e os \(c_i\) ficam acima. A TDMA irá transformar a tridiagonal em uma triangular, para isso o método irá eliminar todos os elementos a da matriz, e adaptar os valores para os elementos da diagonal principal e os da matriz \(B\). Considerando \(c_{i'}\) a função que traz os novos valores dos elementos da diagonal principal, e \(d_{i'}\) a função para os novos valores dos elementos da matriz \(B\), podemos escrever as funções como:
+
+\includegraphics[scale=0.6]{1}
+
+Após obter os novos elementos, podemos obter o vetor solução da seguinte forma:
+\[
+    x_n = d'_n
+\]
+\[
+    x_i = d'_i - c'_i x_{i+1}; i = n - 1, n -2, \dots 1.
+\]
+
+\subsection{Por que o método de Thomas é mais eficiente?}
+
+O método de Thomas economiza mais memória pois não guarda os zeros, ele fornece valores mais seguros para o sistema solução (visto que o método de Gauss passa a ser limitado para sistemas com um número muito grande de equações) e ele alcança melhor complexidade em relação ao de Gauss (enquanto Thomas é \(O(n)\), Gauss é \(O(n^3)\)).
+
+\section{Comparação de métodos}
+
+Teoricamente, o esperado é que Gauss (\(O(n^3)\)) seja o método mais demorado e Thomas (\(O(n)\)) o mais eficaz (em especial para sistemas muito grandes), com o gráfico podemos comprovar esse fato.
+
+Já para os outros casos (Cholensky, padrão octave, LU) a performance é semelhante. Varia entre \(O(n^2)\) e \(O(n^3)\), sendo eficaz para sistemas com não muitas equações. Cholensky depende da decomposição LU, então isso pode ser um fator para essa semelhança de performance. E é possível que o octave utilize esse método por ser eficaz para a maior parte dos casos.
+
+
+\includegraphics[scale=0.3]{grafico}
+\end{document}

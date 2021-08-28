@@ -1,0 +1,478 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[portuguese]{babel}
+\pgfplotsset{compat=1.17}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+%Reduce part, section and subsection font sizes
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+\usepackage{xpatch}
+\xpretocmd{\part}{\setcounter{section}{0}}{}{}
+\tikzset{
+  jumpdot/.style={mark=*,solid},
+  excl/.append style={jumpdot,fill=white},
+  incl/.append style={jumpdot,fill=black},
+}
+\renewcommand\thesubsubsection{\alph{subsubsection})}% chktex 9 chktex 10
+\theoremstyle{definition}
+\newtheorem*{definition}{Def}
+
+\title{SMA0501 - Cálculo I \\ ATR 9}% chktex 8
+\author{Gabriel Fontes - 10856803}% chktex 8
+
+\begin{document}
+\maketitle
+Para melhor esboçar o gráfico de cada função \(f\), precisamos estudar as seguintes questões:
+\begin{itemize}
+    \item Raízes da função (\(f=0\))
+    \item Como se comporta tendendo a infinito (Limites de \(f\))
+    \item Pontos de inflexão (\(f'=0\))
+    \item Onde é crescente e decrescente (Sinal de \(f'\))
+    \item Concavidade (Sinal de \(f''\))
+\end{itemize}
+
+\section{\(f(x)=x^3-3x^2+3x\)}
+Vamos começar obtendo a primeira e segunda derivadas:
+\begin{align*}
+    f'(x)
+    &= \frac{d}{dx} (x^3-3x^2+3x) \\
+    \textit{(Regra da potência)} \\
+    &= 3x^2 - 6x + 3
+\end{align*}
+\begin{align*}
+    f''(x)
+    &= \frac{d}{dx} (3x^2-6x+3) \\
+    \textit{(Regra da potência)} \\
+    &= 6x - 6
+\end{align*}
+\subsection{Raízes}
+Vamos determinar a(s) raiz(es) de \(f\), isto é, onde a função resulta em 0.%chktex 36
+\begin{align*}
+    0 &= f(x) \\
+      &= x^3-3x^2+3x\\
+      &= (x)\cdot(x^2-3x+3)
+\end{align*}
+Determinando as raízes de \(x^2-3x+3\):
+\[
+    x = \frac{3\pm\sqrt{-3}}{6}
+\]
+Resulta em número não-real, logo \(x=0\) é a única raiz real de \(f\).
+\subsection{Infinitos}
+Vamos calcular o limite de \(f(x)\) com \(x\rightarrow +\infty\) e também \(x\rightarrow -\infty\).
+\[
+    \lim_{x\rightarrow +\infty}{x^3-3x^2+3x} = +\infty
+\]
+\[
+    \lim_{x\rightarrow -\infty}{x^3-3x^2+3x} = -\infty
+\]
+\subsection{Inflexão}
+Agora vamos determinar os pontos de inflexão, os pontos onde o crescimento (derivada) da função é \(0\). Ou seja, as raízes de \(f'\):
+\begin{align*}
+    0 &= f'(x) \\
+      &= 3x^2-6x+3 \\
+      &= 3(x^2-2x+1) \\
+      &= 3{(x-1)}^2
+\end{align*}
+Sendo assim, a única raiz real de \(f'\), e ponto de inflexão de \(f\), é \(x = 1\).
+\subsection{Crescente/decrescente}
+Vamos estudar o sinal de \(f'\):
+
+A função \(f'(x) = 3x^2-6x+3\) é uma função polinomial de segundo grau. Isso significa que seu gráfico é uma parábola. O fator quadrático é positivo, isso indica que é uma parábola "virada para cima". Além disso, como temos uma, e apenas uma, raiz, significa que ela apenas toca o eixo x em um ponto, evidência que \(f'(x) \geq 0, \forall x\).
+
+Assim concluimos que \(f\) é crescente em todo o seu domínio.
+\subsection{Concavidade}
+Vamos estudar o sinal de \(f''\):
+
+A função \(f''(x) = 6x - 6\) é uma função linear. Isso significa que podemos facilmente determinar onde é positiva e negativa:
+\begin{align*}
+    6x - 6 &\geq 0 \\
+    6x &\geq 6 \\
+    x &\geq 1
+\end{align*}
+
+Sabemos, então, que \(f\) é côncava para cima quando \(x>1\), e côncava para baixo quando \(x<1\).
+\subsection{Gráfico}
+Por fim, podemos esboçar o gráfico:
+
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+        \addplot[domain=-1:2.5]{x^3 - 3*x^2+ 3*x};
+        \node[circle, fill, inner sep=1pt] at (axis cs:1,1) {};
+        \node[circle, fill, inner sep=1pt] at (axis cs:0,0) {};
+	\end{axis}
+\end{tikzpicture}
+
+\section{\(f(x)=x^3-x^2+1\)}
+Vamos começar obtendo a primeira e segunda derivadas:
+\begin{align*}
+    f'(x)
+    &= \frac{d}{dx} (x^3-x^2+1) \\
+    \textit{(Regra da potência)} \\
+    &= 3x^2 - 2x
+\end{align*}
+\begin{align*}
+    f''(x)
+    &= \frac{d}{dx} (3x^2 - 2x) \\
+    \textit{(Regra da potência)} \\
+    &= 6x - 2
+\end{align*}
+\subsection{Raízes}
+Vamos determinar a(s) raiz(es) de \(f\), isto é, onde a função resulta em 0.%chktex 36
+\begin{align*}
+    0 &= f(x) \\
+      &= x^3-x^2+1 
+\end{align*}
+
+A única raiz real é \(\sqrt{0.6}\).
+\subsection{Infinitos}
+Vamos calcular o limite de \(f(x)\) com \(x\rightarrow +\infty\) e também \(x\rightarrow -\infty\).
+\[
+    \lim_{x\rightarrow +\infty}{x^3-x^2+1} = +\infty
+\]
+\[
+    \lim_{x\rightarrow -\infty}{x^3-x^2+1} = -\infty
+\]
+\subsection{Inflexão}
+Agora vamos determinar os pontos de inflexão, os pontos onde o crescimento (derivada) da função é 0. Ou seja, as raízes de \(f'\):
+\begin{align*}
+    0 &= f'(x) \\
+      &= 3x^2-2x \\
+      &= x(3x-2)
+\end{align*}
+
+Agora calcularemos a raiz de \(3x-2\):
+\begin{align*}
+    3x - 2 &= 0 \\
+    3x = 2 \\
+    x = \frac{2}{3}
+\end{align*}
+
+Sendo assim, as raízes de \(f'\), e pontos de inflexão de \(f\), são \(x = \frac{2}{3}\) e \(x = 0\).
+\subsection{Crescente/decrescente}
+Vamos estudar o sinal de \(f'\):
+
+A função \(f(x) = 3x^2-2x\) é uma função polinomial de segundo grau. Isso significa que seu gráfico é uma parábola. O fator quadrático é positivo, isso indica que ela é uma parábola "virada para cima".
+
+Como temos exatamente duas raízes reais, \(f(x) \geq 0\) fora do intervalo delimitado pelas duas raízes.
+
+Ou seja, a função \(f\) é crescente quando \(x < 0\) ou \(x > \frac{2}{3}\), sendo decrescente em \(0 < x < \frac{2}{3}\)
+\subsection{Concavidade}
+Vamos estudar o sinal de \(f''\):
+
+A função \(f''(x) = 6x - 2\) é uma função linear. Isso significa que podemos facilmente determinar onde é positiva e negativa:
+\begin{align*}
+    6x - 2 &\geq 0 \\
+    6x &\geq 2 \\
+    x &\geq \frac{1}{3}
+\end{align*}
+
+Sabemos, então, que \(f\) é côncava para cima quando \(x > \frac{1}{3}\), e côncava para baixo quando \(x < \frac{1}{3}\).
+\subsection{Gráfico}
+Por fim, podemos esboçar o gráfico:
+
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+        \addplot[domain=-1.5:1.8]{x^3 - x^2 + 1};
+        \node[circle, fill, inner sep=1pt] at (axis cs:-0.754877,0) {};
+        \node[circle, fill, inner sep=1pt] at (axis cs:0.66666,0.85185) {};
+        \node[circle, fill, inner sep=1pt] at (axis cs:0.33333,0.92592) {};
+        \node[circle, fill, inner sep=1pt] at (axis cs:0,1) {};
+	\end{axis}
+\end{tikzpicture}
+
+\section{\(f(x) = \sqrt{x^2-4}\)}
+Vamos começar obtendo a primeira e segunda derivadas:
+\begin{align*}
+    f'(x)
+    &= \frac{d}{dx} \sqrt{x^2-4} \\
+    &= \frac{d}{dx} {(x^2-4)}^{1/2} \\
+    \textit{(Regra da cadeia)} \\
+    &= \frac{d}{dx} (x^2-4) \cdot \frac{d}{d(x^2-4)} {(x^2-4)}^{1/2}\\
+    \textit{(Regra da potência)} \\
+    &= 2x \cdot \frac{1}{2}{(x^2-4)}^{-1/2} \\
+    &= 2x \cdot \frac{1}{2{(x^2-4)}^{1/2}} \\
+    &= \frac{2x}{2\sqrt{x^2-4}} \\
+    &= \frac{x}{\sqrt{x^2-4}}
+\end{align*}
+\begin{align*}
+    f''(x)
+    &= \frac{d}{dx} \frac{x}{\sqrt{x^2-4}} \\
+    \textit{(Regra do quociente)} \\
+    &= \frac{((\sqrt{x^2-4})\cdot (x)') - ((\sqrt{x^2-4})'\cdot x)}{{(\sqrt{x^2-4})}^2} \\
+    &= \frac{\sqrt{x^2-4}-\frac{x^2}{\sqrt{x^2-4}}}{x^2-4} \\
+    &= \frac{(x^2-4)-x^2}{(x^2-4) \cdot \sqrt{x^2-4}} \\
+    &= \frac{-4}{{(x^2-4)}^{3/2}}
+\end{align*}
+\subsection{Raízes}
+Vamos determinar a(s) raiz(es) de \(f\), isto é, onde a função resulta em 0.%chktex 36
+\begin{align*}
+    0
+    &= f(x) \\
+    &= \sqrt{x^2-4} \\
+    &= x^2-4 \\
+    \implies x &= \pm \sqrt{4} = \pm 2
+\end{align*}
+
+As raízes de \(f\) são \(2\) e \(-2\).
+\subsection{Infinitos}
+Vamos calcular o limite de \(f(x)\) com \(x\rightarrow +\infty\) e também \(x\rightarrow -\infty\).
+\begin{align*}
+    \lim_{x\rightarrow+\infty} \sqrt{x^2-4} &= +\infty \\
+    \lim_{x\rightarrow-\infty} \sqrt{x^2-4} &= +\infty
+\end{align*}
+\subsection{Inflexão}
+Agora vamos determinar os pontos de inflexão, os pontos onde o crescimento (derivada) da função é \(0\). Ou seja, as raízes de \(f'\):
+\begin{align*}
+    0
+    &= f'(x) \\
+    &= \frac{x}{\sqrt{x^2-4}}
+\end{align*}
+
+Para uma fração resultar em \(0\), o numerador (\(x\)) precisar ser igual à \(0\). Caso tomemos \(x = 0\), o denominador resultará em \(\sqrt{-4}\), não definido nos reais.
+
+Concluímos, então, que \(f'\) não admite raízes reais, logo \(f\) não possui pontos de inflexão.
+\subsection{Crescente/decrescente}
+Vamos estudar o sinal de \(f'\):
+
+Por conta do denominador de \(f'(x) = \frac{x}{\sqrt{x^2-4}}\), precisamos de um \(x \geq \abs{2}\), a fim de obter um \(f'(x) \in \mathbb{R}\).
+
+\(f'(2)\) e \(f'(-2)\) tenderão, respectivamente, a \(+\infty\) e \(-\infty\), por conta do numerador.
+Aumentando \(x\) além de \(2\), vemos que \(f'(x)\) tende a \(1\), já que o denominador tende a ficar próximo do numerador. O mesmo vale quando diminuimos \(x\) além de \(-2\), se aproximando de \(-1\).
+
+Também é visível que a função não está definida em \(-2 < x < 2\) (por conta da raiz não ser real nesse intervalo). Logo esse intervalo também não está no domínio de \(f\).
+
+Assim, podemos afirmar que \(f'(x)\) é positivo para \(x \geq 2\), e negativo para \(x\leq -2\).
+
+Portanto, \(f(x)\) é crescente em \(x \geq 2\), e decrescente em \(x \leq 2\).
+\subsection{Concavidade}
+Agora, estudaremos o sinal de \(f''\):
+
+A função \(f''(x) = \frac{-4}{{(x^2-4)}^{3/2}}\) é sempre negativa, para qualquer x onde está definida. Isso se deve pelo fato que o \(x\) ao quadrado sempre resultará em positivo, ou seja, o denominador será sempre (quando for real) positivo. Como o numerador é negativo, a função será negativa.
+
+Concluímos assim que \(f\) tem concavidade para baixo em todo o seu domínio.
+\subsection{Gráfico}
+Por fim, podemos esboçar o gráfico:
+
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+        \addplot[domain=-20:20]{sqrt(x^2 - 4)};
+        \node[circle, fill, inner sep=1pt] at (axis cs:-2.2,0.8) {};
+        \node[circle, fill, inner sep=1pt] at (axis cs:2.2,0.8) {};
+	\end{axis}
+\end{tikzpicture}
+
+\section{\(f(x) = \frac{x}{x+1}\)}
+Vamos começar obtendo a primeira e segunda derivadas:
+\begin{align*}
+    f'(x)
+    &= \frac{d}{dx}\frac{x}{x+1} \\
+    \textit{(Regra do quociente)} \\
+    &= \frac{(x)'\cdot (x+1) - x \cdot (x+1)'}{{(x+1)}^2} \\
+    &= \frac{x+1-x}{{(x+1)}^2} \\
+    &= \frac{1}{{(x+1)}^2}
+\end{align*}
+\begin{align*}
+    f''(x)
+    &= \frac{d}{dx}{(x+1)}^{-2} \\
+    \textit{(Regra da cadeia)} \\
+    &= \frac{d}{dx}(x+1) \cdot \frac{d}{d(x+1)}{(x+1)}^{-2} \\
+    \textit{(Regra da potência)} \\
+    &= 1 \cdot -2{(x+1)}^{-3} \\
+    &= \frac{-2}{{(x+1)}^3}
+\end{align*}
+\subsection{Raízes}
+Agora vamos determinar a(s) raiz(es) de \(f\), isto é, onde a função resulta em \(0\).
+\begin{align*}
+    0
+    &= f(x) \\
+    &= \frac{x}{x+1} \\
+    &= x
+\end{align*}
+
+Assim, podemos ver que a única raiz será \(x=0\). Para uma fração resultar em \(0\), o numerador precisar ser \(0\), que só é possível com \(x=0\).
+\subsection{Infinitos}
+Vamos calcular o limite de \(f(x)\) com \(x\rightarrow+\infty\) e também \(x\rightarrow-\infty\).
+
+Conforme x cresce (seja negativo ou positivo), o denominador e o numerador se aproximam. Então a fração se aproxima de 1:
+
+\begin{align*}
+    \lim_{x\rightarrow+\infty} \frac{x}{x+1} &= 1 \\
+    \lim_{x\rightarrow-\infty} \frac{x}{x+1} &= 1
+\end{align*}
+
+Percebemos também uma indeterminação no \(x = -1\) (pois o denominador fica \(0\)), então vamos calcular os limites nele também, pois podem ser úteis:
+\begin{align*}
+    \lim_{x\rightarrow-1+} \frac{x}{x+1} &= \lim_{x\rightarrow-1+} \frac{-1}{x+1} = -\infty \\
+    \lim_{x\rightarrow-1-} \frac{x}{x+1} &= \lim_{x\rightarrow-1-} \frac{-1}{x+1} = +\infty \\
+\end{align*}
+\subsection{Inflexão}
+Agora vamos determinar os pontos de inflexão, os pontos onde o crescimento (derivada) da função é \(0\). Ou seja, as raízes de \(f'\):
+\begin{align*}
+    0
+    &= f'(x) \\
+    &= \frac{1}{{(x+1)}^2}
+\end{align*}
+
+Podemos ver que \(f'(x)\) tem numerador igual a \(1\). Isso torna impossível se obter uma raiz, já que essa fração nunca resultará em 0.
+
+Portanto, \(f\) não tem pontos de inflexão.
+\subsection{Crescente/decrescente}
+Vamos estudar o sinal de \(f'(x) = \frac{1}{{(x+1)}^2}\):
+
+O numerador é positivo, e o denominador está elevado ao quadrado. Logo, não importa qual valor de x, a fração sempre resultará em um número positivo.
+
+Logo, \(f\) é crescente em todo o seu domínio.
+
+Podemos perceber que quando \(x = -1\), o denominador se torna \(0\). Logo \(f\) não está definida em \(x = -1\).
+\subsection{Concavidade}
+Agora estudaremos o sinal de \(f''(x) = \frac{-2}{{(x+1)}^3}\):
+
+Como não temos pontos de inflexão para partir, vamos analizar algum outro ponto interessante. Um bom ponto de partida parece ser o \(x = -1\), é possível que haja diferença de concavidade antes e depois dele.
+
+Quando \( x > -1\), \(x+1 > 0\), logo o denominador é positivo. Como o numerador é negativo, \(f'' < 0\).
+
+Quando \( x < -1\), \(x+1 < 0\), logo o denominador é negativo (potência ímpar). Como o numerador é negativo, \(f'' > 0\).
+\subsection{Gráfico}
+Por fim, podemos esboçar o gráfico:
+
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+        \addplot[domain=-6:-1.1]{x/(x+1)};
+        \addplot[domain=-0.9:6]{x/(x+1)};
+        \node[circle, fill, inner sep=1pt] at (axis cs:0,0) {};
+	\end{axis}
+\end{tikzpicture}
+
+\section{\(f(x) = \frac{x^2}{x+1}\)}
+Vamos começar obtendo a primeira e segunda derivadas:
+\begin{align*}
+    f'(x)
+    &= \frac{d}{dx} \frac{x^2}{x+1} \\
+    &= \frac{(x^2)'\cdot(x+1)-x^2\cdot(x+1)'}{{(x+1)}^2} \\
+    &= \frac{2x\cdot(x+1)-x^2}{{(x+1)}^2} \\
+    &= \frac{2x^2+2x-x^2}{{(x+1)}^2} \\
+    &= \frac{x(x+2)}{{(x+1)}^2} 
+\end{align*}
+\begin{align*}
+    f''(x)
+    &= \frac{d}{dx} \frac{x(x+2)}{{(x+1)}^2} \\
+    &= \frac{d}{dx} \frac{2x+x^2}{x^2+2x+1} \\
+    &= \frac{(x^2+2x)'\cdot(x^2+2x+1)-(x^2+2x)\cdot(x^2+2x+1)}{{(x+1)}^4} \\
+    &= \frac{(2x+2)\cdot(x^2+2x+1)-(x^2+2x)\cdot(2x+2)}{{(x+1)}^4} \\
+    &= \frac{(2x+2)\cdot((x^2+2x+1)-(x^2+2x))}{{(x+1)}^4} \\
+    &= \frac{2x+2}{{(x+1)}^4} \\
+    &= \frac{2(x+1)}{{(x+1)}^4} \\
+    &= \frac{2}{{(x+1)}^3}
+\end{align*}
+\subsection{Raízes}
+Agora vamos determinar a(s) raiz(es) de \(f\), isto é, onde a função resulta em 0.
+\begin{align*}
+    0
+    &= f(x) \\
+    &= \frac{x^2}{x+1} \\
+    &= x^2 \\
+    &= x
+\end{align*}
+Assim, podemos ver que a única raiz será \(x=0\). Para uma fração resultar em 0, o numerador (\(x^2\)) precisa ser 0, que só é possível com \(x=0\).
+\subsection{Infinitos}
+Vamos calcular o limite de \(f(x)\) com \(x\rightarrow +\infty\) e \(x\rightarrow -\infty\).
+
+Conforme \(x\) cresce, \(x\) e \(x+1\) se aproximam, logo a fração se aproxima de \(\frac{x^2}{x}\), que tende a infinito. O mesmo ocorre conforme \(x\) decresce, mas o denominador fica negativo e o numerador positivo, logo tende a menos infinito:
+
+\begin{align*}
+    \lim_{x\rightarrow +\infty} \frac{x^2}{x+1} &= \lim_{x\rightarrow +\infty} \frac{x^2}{+x} = +\infty \\
+    \lim_{x\rightarrow -\infty} \frac{x^2}{x+1} &= \lim_{x\rightarrow -\infty} \frac{x^2}{-x} =  -\infty
+\end{align*}
+
+Podemos ver que o denominador tende a \(0\) quando \(x\) tende a \(-1\), uma indeterminação. Vamos aproveitar para ver o limite nesse ponto:
+
+\begin{align*}
+    \lim_{x\rightarrow -1+} \frac{x^2}{x+1} &= \lim_{x\rightarrow -1+} \frac{x^2}{+0} = +\infty \\
+    \lim_{x\rightarrow -1-} \frac{x^2}{x+1} &= \lim_{x\rightarrow -1-} \frac{x^2}{-0} =  -\infty
+\end{align*}
+\subsection{Inflexão}
+Agora vamos determinar os pontos de inflexão, os pontos onde o crescimento (derivada) da função é 0. Ou seja, as raízes de \(f'\):
+\begin{align*}
+    0
+    &= f'(x) \\
+    &= \frac{x(x+2)}{{(x+1)}^2} \\
+    &= x(x+2) \\
+    \implies (x+2) &= 0\text{, }x = 0 \\
+    \implies x &= -2\text{, }x = 0
+\end{align*}
+
+Podemos ver, então, que os pontos de inflexão são \(x=0\) e \(x=-2\).
+\subsection{Crescente/decrescente}
+Vamos estudar o sinal de \(f'(x) = \frac{x(x+2)}{{(x+1)}^2}\):
+
+Começaremos a estudar o sinal pelos pontos das inflexões (\(0\) e \(-2\)).
+
+Com \(x > 0\), o numerador e denominador ficam positivos, logo \(f'\) é positiva e \(f\) é crescente quando \(x>0\).
+
+Com \(x < -2\), o numerador (o parêntesis fica negativo, e o x também, logo positivo) e o denominador (por conta do quadrado) ficam positivos, logo \(f'\) é positiva e \(f\) é crescente quando \(x< -2\).
+
+Como temos indeterminação em \(x=-1\), vamos analisar o intervalo entre ele e as inflexões:
+
+Com \(-1 > x > 0\), os parêntesis continuam positivos, mas o \(x\) do numerador é negativo, logo o numerador é negativo e o denominador positivo. Portanto \(f'\) é positiva e \(f\) é decrescente quando \(-1 > x > 0\).
+
+Com \(-2 > x > -1\), o parêntesis do denominador fica negativo, porém está ao quadrado, logo o denominador é positivo. O parêntesis do numerador continua positivo, porém o \(x\) que o multiplica é negativo, logo o numerador é negativo. Portanto, \(f'\) é negativa e \(f\) é decrescente quando \(-2 > x > -1\)
+
+A função não está definida em \(x = -1\) por conta da indeterminação. Então seu domínio são todos os reais menos esse.
+\subsection{Concavidade}
+Agora estudaremos o sinal de \(f''(x) = \frac{2}{{(x+1)}^3}\):
+
+Como o \(x\) agora só aparece no denominador (junto com \(+1\)), o ponto onde a concavidade muda parece ser o \(x=-1\), então vamos estudar o sinal em pontos maiores e menores que ele.
+
+Para \(x > -1\), o parêntesis (logo o denominador, por estar ao cubo) fica positivo. Assim \(f''\) é positiva e \(f\) tem concavidade para cima em \(x > -1\).
+
+Para \(x < -1\), o parêntesis (logo o denominador, por estar ao cubo) fica negativo. Assim \(f''\) é negativa e \(f\) tem concavidade para baixo em \(x < -1\).
+\subsection{Gráfico}
+Por fim, podemos esboçar o gráfico:
+
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+        \addplot[domain=-0.9:5]{x^2/(x+1)};
+        \addplot[domain=-6:-1.1]{x^2/(x+1)};
+        \node[circle, fill, inner sep=1pt] at (axis cs:0,0) {};
+        \node[circle, fill, inner sep=1pt] at (axis cs:-2,-4) {};
+	\end{axis}
+\end{tikzpicture}
+
+\section{\(f(x) = xe^{-3x}\)}
+blabla
+\subsection{Raízes}
+\subsection{Infinitos}
+\subsection{Inflexão}
+\subsection{Crescente/decrescente}
+\subsection{Concavidade}
+\subsection{Gráfico}
+
+\section{\(f(x) = 2x + 1 + e^{-x}\)}
+blabla
+\subsection{Raízes}
+\subsection{Infinitos}
+\subsection{Inflexão}
+\subsection{Crescente/decrescente}
+\subsection{Concavidade}
+\subsection{Gráfico}
+
+\section{\(f(x) = e^{-x^2}\)}
+blabla
+\subsection{Raízes}
+\subsection{Infinitos}
+\subsection{Inflexão}
+\subsection{Crescente/decrescente}
+\subsection{Concavidade}
+\subsection{Gráfico}
+
+\end{document} 

@@ -1,0 +1,306 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{xstring}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{float}
+\pgfplotsset{compat=newest}
+
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+{\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SME0500 \\ Cálculo Numérico \\ Atividade 6}
+\author{Gabriel Silva Fontes | 10856803}
+\begin{document}
+\maketitle
+
+% \section*{2.}
+% \subsection*{(a) \(P_1\)}
+% \subsection*{(b) \(P_2\)}
+
+\section*{4.}
+
+\subsection*{(a)}
+
+\subsubsection*{1. \(g_1(x) = ax^2+bx\)}
+
+Na forma matricial:
+\[
+\begin{bmatrix}
+    y_1 \\
+    y_2 \\
+    y_3 \\
+    y_4
+\end{bmatrix}
+=
+\begin{bmatrix}
+    {x_1}^2 & x_1 \\
+    {x_2}^2 & x_2 \\
+    {x_3}^2 & x_3 \\
+    {x_4}^2 & x_4 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    a \\
+    b
+\end{bmatrix}
+\]
+Colocando nossos valores:
+\[
+\begin{bmatrix}
+    1 \\
+    -3 \\
+    1 \\
+    9
+\end{bmatrix}
+=
+\begin{bmatrix}
+    4 & -2 \\
+    1 & -1 \\
+    1 & 1 \\
+    4 & 2 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    a \\
+    b
+\end{bmatrix}
+\]
+
+Que nos resulta em:
+\[
+\begin{bmatrix}
+    a \\
+    b
+\end{bmatrix}
+=
+\begin{bmatrix}
+    1.1176 \\
+    2
+\end{bmatrix}
+\]
+Ou seja, teremos a função:
+\[
+    \boxed{g_1(x) = 1.1176x^2 + 2x}
+\]
+
+\subsubsection*{2. \(g_2(x) = cx^2+d\)}
+Na forma matricial:
+\[
+\begin{bmatrix}
+    y_1 \\
+    y_2 \\
+    y_3 \\
+    y_4
+\end{bmatrix}
+=
+\begin{bmatrix}
+    {x_1}^2 & 1 \\
+    {x_2}^2 & 1 \\
+    {x_3}^2 & 1 \\
+    {x_4}^2 & 1 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    c \\
+    d
+\end{bmatrix}
+\]
+Colocando nossos valores:
+\[
+\begin{bmatrix}
+    1 \\
+    -3 \\
+    1 \\
+    9
+\end{bmatrix}
+=
+\begin{bmatrix}
+    4 & 1 \\
+    1 & 1 \\
+    1 & 1 \\
+    4 & 1 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    c \\
+    d
+\end{bmatrix}
+\]
+
+Que nos resulta em:
+\[
+\begin{bmatrix}
+    c \\
+    d
+\end{bmatrix}
+=
+\begin{bmatrix}
+    2 \\
+    -3
+\end{bmatrix}
+\]
+Ou seja, teremos a função:
+\[
+    \boxed{g_2(x) = 2x^2 - 3}
+\]
+
+\subsection*{(b)}
+
+Vamos calcular os erros por truncamento. Primeiro do \(g_1\):
+\begin{align*}
+    Q_1 = {||f - g_1||}^2
+    &= \sum^4_{i=1}{{(y_1 - g_1(x_i))}^2} \\
+    &= \sum_{i=1}^{4}{y_i^2} - 2 \sum_{i=1}^{4}{y_i\cdot g_1(x_i)} + \sum_{i=1}^{4}{g_1^2(x_i)} \\
+    &= 92 - 2\cdot(82.469) + 83.106 = 10.168
+\end{align*}
+
+Agora o \(g_2\):
+\begin{align*}
+    Q_2 = {||f - g_2||}^2
+    &= \sum^4_{i=1}{{(y_1 - g_2(x_i))}^2} \\
+    &= \sum_{i=1}^{4}{y_i^2} - 2 \sum_{i=1}^{4}{y_i\cdot g_2(x_i)} + \sum_{i=1}^{4}{g_2^2(x_i)} \\
+    &= 92 - 2\cdot(52) + 28.380 = 16.380
+\end{align*}
+
+Como vemos, \(g_1\) tem um erro menor. Apesar de não chegar tão perto do ponto \((-1,-3)\), por exemplo, ela fica relativamente próxima da maioria, sendo assim uma melhor aproximação.
+
+\subsection*{Adicional}
+
+Gráfico das nossas aproximações (\(g_1\) em vermelho, \(g_2\) em azul):
+\begin{center}
+	\begin{tikzpicture}[scale=2]
+		\begin{axis}
+			[width=6cm,
+				height=6cm,
+				ticklabel style={font=\tiny},
+				grid=both,
+				grid style={line width=.1pt, draw=gray!10},
+				major grid style={line width=.2pt,draw=gray!50},
+				axis lines=middle,
+				xmin=-7,xmax=7,ymin=-4,ymax=10,
+				samples=400,
+			]
+            \addplot[red,domain=-10:10] {(1.1176*x^2)+(2*x)} node {\(g_1\)};
+            \addplot[blue,domain=-10:10] {(2*x^2)-3} node {\(g_2\)};
+			\node[circle,fill,inner sep=1pt] at (axis cs:-2,1) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:-1,-3) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:1,1) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:2,9) {};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+
+\section*{10.}
+\subsection*{(a)}
+Vamos montar a forma matricial:
+\[
+\begin{bmatrix}
+    \Pi(x_1) \\
+    \Pi(x_2) \\
+    \Pi(x_3) \\
+    \Pi(x_4)
+\end{bmatrix}
+=
+\begin{bmatrix}
+    1 & \frac{x_1}{\log_{10}{(x_1)}} \\
+    1 & \frac{x_2}{\log_{10}{(x_2)}} \\
+    1 & \frac{x_3}{\log_{10}{(x_3)}} \\
+    1 & \frac{x_4}{\log_{10}{(x_4)}} \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    a \\
+    b
+\end{bmatrix}
+\]
+
+Basta preencher com nossos valores:
+\[
+\begin{bmatrix}
+    25 \\
+    168 \\
+    1229 \\
+    9592
+\end{bmatrix}
+=
+\begin{bmatrix}
+    1 & 50 \\
+    1 & 333.33 \\
+    1 & 2500 \\
+    1 & 20000 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    a \\
+    b
+\end{bmatrix}
+\]
+
+Resolvendo, temos:
+\[
+\begin{bmatrix}
+    a \\
+    b
+\end{bmatrix}
+=
+\begin{bmatrix}
+    12.82532 \\
+     0.47907
+\end{bmatrix}
+\]
+
+Que nos dá a função:
+\[
+    g(x) = 12.82532 + 0.47907 \frac{x}{\log{(x)}}
+\]
+
+\subsection*{(b)}
+
+Basta usar \(x = 999999\) em nossa função:
+\[
+    \Pi(999999) \approx g(999999) \approx 79862
+\]
+
+\subsection*{Adicional}
+
+Gráfico (escala logarítmica) da nossa aproximação, pontos usados, e aproximação de \(\Pi(999999)\):
+\begin{center}
+	\begin{tikzpicture}[scale=2]
+		\begin{axis}
+			[width=7cm,
+				height=7cm,
+				ticklabel style={font=\tiny},
+				grid=both,
+				grid style={line width=.1pt, draw=gray!10},
+				major grid style={line width=.2pt,draw=gray!50},
+                ymode=log,
+                log basis y={10},
+                xmode=log,
+                log basis x={10},
+			]
+            \addplot[red,domain=25:1000000] {12.82532+(0.47907*(x/(ln(x)/ln(10))))};
+			\node[circle,fill,inner sep=1pt] at (axis cs:100,25) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:1000,168) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:10000,1229) {};
+			\node[circle,fill,inner sep=1pt] at (axis cs:100000,9592) {};
+			\node[blue,circle,fill,inner sep=1pt] at (axis cs:999999,79862) {};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+No geral, a aproximação parece ser muito boa. A ideia do exercício é muito interessante e mostra uma aplicação bem legal da aproximação. Partindo de alguns poucos pontos, conseguimos efetivamente modelar essa tendência em uma função muito simples.
+
+Não tenho certeza de como comprovar sem contas, mas o gráfico me parece um bom indicativo da tendência.
+\end{document}

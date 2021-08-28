@@ -1,0 +1,5 @@
+ex3
+*.o
+vgcore*
+*.dat
+.direnv

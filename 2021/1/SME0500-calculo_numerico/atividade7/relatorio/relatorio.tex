@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{minted}
+\usepackage{graphicx}
+
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]{\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SME0500 \\ Cálculo Numérico \\ Atividade 7}
+\author{Gabriel Silva Fontes | 10856803}
+\begin{document}
+\maketitle
+\section{Os arquivos incluidos}
+Além desse relatório, incluí os arquivos:
+
+\begin{itemize}
+    \item \(build\_system.m\): arquivo-função que gera o sistema, partindo das bases e do dataset;
+
+    \item \(solve.m\): arquivo-script que lê dataset, define bases, utiliza a função do arquivo \(build\_system.m\) e resolve o sistema;
+
+    \item \(graph.m\): arquivo-script que utiliza a solução de \(solve.m\) e o dataset para montar gráfico. Ele tem uma função que utiliza os coeficientes e bases para calcular o polinômio, mapeando valores de X e Y para seus respectivos Z.
+\end{itemize}
+
+\section{Código que constrói e resolve o sistema}
+\subsection{Sobre}
+Implementei a função no arquivo \(build\_system.m\). Ela toma um conjunto de handles de funções, representando as bases, e também uma matriz Nx3 (colunas com x, y, z), que representa o dataset de pontos.
+
+As bases são definidas assim para adicionar grande flexibilidade na resolução, enquanto o dataset pode ser lido do input, escrito manualmente, ou facilmente carregado com \(importdata\).
+
+Exemplifiquei como usar nas seções seguintes.
+
+\subsection{Como funciona}
+O código é relativamente simples.
+
+Primeiro, montamos uma matriz de bases computadas. Isto é, para cada base, temos uma coluna representando os valores que ela retorna quando cada \(x\) e \(y\) do dataset é plugado nela.
+
+Segundo, iteramos novamente nas bases, e começamos preenchendo \(b\), com os produtos escalares entre cada uma das bases previamente calculadas pelo conjunto de coordenadas \(z\), contendo um outro loop pelas bases, para construir a matriz \(A\) utilizando a mesma ideia de tirar os produtos escalares das bases previamente calculadas.
+
+\section{Exemplo simples (Caso\_teste.txt)}
+O primeiro caso foi ajustar aos pontos um polinômio da forma:
+\[
+    P_{22}(x,y) = \alpha_{00} + \alpha_{10}x + \alpha_{01}y + \alpha_{20}x^2 + \alpha_{11}xy + \alpha_{02}y^2
+\]
+
+\subsection{Código}
+\begin{minted}{matlab}
+data = importdata('Caso_teste.txt', '\t', 1).data;
+bases = {
+    @(x,y)(1),
+    @(x,y)(x),
+    @(x,y)(y),
+    @(x,y)(x^2),
+    @(x,y)(x*y),
+    @(x,y)(y^2),
+};
+
+[A, b] = build_system(bases, data);
+x = A\b;
+\end{minted}
+
+\subsection{Resultado}
+\[
+    x =
+    \begin{bmatrix}
+        0 \\
+        -3 \\
+        4 \\
+        1 \\
+        2 \\
+        -1
+    \end{bmatrix}
+\]
+\begin{center}
+\includegraphics[scale=0.9]{grafico1.png}
+\end{center}
+
+\section{Exemplo avançado (Ex07\_Points.txt)}
+O segundo caso foi ajustar ao outro arquivo de pontos um polinômio de grau maior:
+\[
+    P_{23}(x,y) = \alpha_{00} + \alpha_{10}x + \alpha_{01}y + \alpha_{20}x^2 + \alpha_{11}xy + \alpha_{02}y^2 + \alpha_{12}xy^2 + \alpha_{03}y^3
+\]
+
+\subsection{Código}
+\begin{minted}{matlab}
+data = importdata('Ex07_Points.txt', '\t', 1).data;
+bases = {
+    @(x,y)(1),
+    @(x,y)(x),
+    @(x,y)(y),
+    @(x,y)(x^2),
+    @(x,y)(x*y),
+    @(x,y)(y^2),
+    @(x,y)(x*y^2),
+    @(x,y)(y^3),
+};
+
+[A, b] = build_system(bases, data);
+x = A\b;
+\end{minted}
+
+\subsection{Resultado}
+\[
+    x =
+    \begin{bmatrix}
+        1.9103 \\
+        -2.4358 \\
+        -0.0988 \\
+        0.6682 \\
+        0.1930 \\
+        -0.3648 \\
+        0.0551 \\
+        0.1082
+    \end{bmatrix}
+\]
+\begin{center}
+\includegraphics[scale=0.9]{grafico2.png}
+\end{center}
+
+
+\end{document}

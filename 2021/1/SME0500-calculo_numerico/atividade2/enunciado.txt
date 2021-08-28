@@ -1,0 +1,22 @@
+Nesta atividade, você deverá comparar a velocidade de processamento de vários métodos para uma classe especial de sistemas lineares, cuja matriz é simétrica SPD e tridiagonal. Tenha à mão as rotinas de substituição progressiva e regressiva para matrizes triangulares.
+
+O exercício exige as seguintes entregas:
+
+1) Desenvolvimento do algoritmo de Thomas, que é uma simplificação da Eliminação de Gauss desenvolvido especialmente para matrizes tridiagonais; Pesquise sobre o algoritmo e escreva a parte teórica de seu desenvolvimento, com todas as contas. Explique porque o método é mais eficiente que a Eliminação de Gauss clássica.
+
+2) Implemente o algoritmo de Thomas e o submeta no run.codes para ser testado com problemas teste. Templates serão fornecidos nos anexos.
+
+3) Faça uma comparação entre os seguintes métodos:
+1. Usando diretamente o comando "\" (Matlab/Octave) ou "linalg.solve" (Python);
+2. Usando uma rotina de decomposição LU (comando lu ou slides) + substituições regressiva e progressiva;
+3. Usando o comando "chol" (Matlab/Octave) ou "linalg.cholesky" (Python) para decomposição da matriz, mais os algoritmos de substituições regressiva e progressiva;
+4. Usando uma implementação sua (slides) do método de Eliminação de Gauss sem pivoteamento;
+5. Usando o algoritmo de Thomas desenvolvido por você.
+Como deve ser feita a comparação: gere matrizes tridiagonais SPD aleatórias de dimensões 64, 128, 256, 512, 1024, ... (até onde conseguir rodar em seu computador pessoal), com lados direitos aleatórios, e faça tomadas do tempo necessário para resolução do problema Ax=b para cada um dos 5 métodos acima. Siga os tutoriais em anexo para geração da matriz aleatória e tomada de tempo. Talvez seja necessário resolver o mesmo problema mais de uma vez, e fazer a média do tempo, para evitar que oscilações de processamento de seu computador interfiram na precisão das tomadas de tempo.
+
+Com os dados de tempo (ou média de tempo) para cada um dos métodos, faça um gráfico em escala logarítmica de dimensão n vs. tempo, e verifique como o tempo de cada método cresce com o aumento de n. Você deve obter gráficos que se aproximam de retas (em escala log) quando n é suficientemente grande. A inclinação destas retas dá uma idéia da ordem de crescimento (linear, quadrático, cúbico) e pode ser obtida para comparar com as estimativas teóricas, veja tutorial em anexo de como fazer este cálculo. Coloque seus gráficos e resultados em um pdf, com comentários sobre os resultados que obteve. Responda as perguntas no pdf: Qual é a ordem esperada (teórica) e ordem observada do método de Thomas? Seguindo a tendência de crescimento observada de cada método, estime quanto tempo cada método demoraria para resolver um sistema desses com 1 milhão de incógnitas no seu computador? E com 1 bilhão de incógnitas?
+
+
+Resumo da entrega:
+1. Um arquivo PDF contendo a resolução dos itens (1) e (3) solicitados acima;
+2. Implementação do algoritmo de Thomas, solicitada no item (2), a ser submetida e testada no run.codes;

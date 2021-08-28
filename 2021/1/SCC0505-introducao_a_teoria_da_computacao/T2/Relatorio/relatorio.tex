@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{minted}
+\usepackage{hyperref}
+
+
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SCC0505 \\ Introdução à Teoria da Computação \\ Trabalho 2}
+\author{Gabriel Silva Fontes | 10856803
+        \and
+        Amanda Lindoso Figueiredo | 10784306
+        \and
+        Rafael Doering Soares | 10408410
+        \and
+        Felipe Moreira Neves de Souza | 10734651}
+
+\begin{document}
+\maketitle
+\section{Sobre a solução}
+A nossa implementação do simulador de máquinas de turing suporta fielmente todas as especificações nescessárias, e um pouco mais.
+
+Mais especificamente: não temos limite algum na quantidade de símbolos, transições, ou estados; podemos ter mais que um estado final, o símbolo branco e o estado inicial também são configuráveis.
+
+Assim como no T1, é possível generalizar e utilizar Generics para permitir o uso de qualquer tipo de dado como símbolo e estado.
+
+\section{Código}
+\subsection{Linguagem e paradigmas}
+Assim como no anterior, desenvolvemos com Rust. Principalmente com Orientação a Objetos e algumas estratégias funcionais (em especial na leitura de input).
+
+
+\subsection{Tipos usados}
+É bem mais fácil expressar as transições num autômato determinístico: um par estado+símbolo vai sempre resultar em uma, e apenas uma, tripla estado, símbolo, direção. Por isso, utilizamos uma estrutura Map (que é um hashmap) para representá-las.
+
+Os conjuntos são representados por uma estrutura Set (que é um hashset).
+
+Os símbolos e estados podem ser editados para outros tipos de dado (ou generalizado para funcionar com todos), mas na nossa implementação estão definidos, respectivamente, como um caractere e um u16\footnote{Inteiro não-negativo de 16 bits}. Além disso, Direction é simplesmente um enum com 3 possibilidades (esquerda, direita, não mover).
+
+\begin{minted}{rust}
+type Symbol = char;
+type State = u16;
+
+enum Direction {
+    Left,
+    Right,
+    None,
+}
+\end{minted}
+
+\subsection{Estrutura TuringMachine}
+
+Considerando os tipos explicados acima, essa é a definição da máquina, propositalmente muito similar a definição matemática:
+
+\begin{minted}{rust}
+pub struct TuringMachine {
+    input_symbols: Set<Symbol>,
+    tape_symbols: Set<Symbol>,
+    blank_symbol: Symbol,
+    states: Set<State>,
+    initial_state: State,
+    accepting_states: Set<State>,
+    transitions: Map<(State, Symbol), (State, Symbol, Direction)>,
+}
+\end{minted}
+
+\subsection{Método run\_tape}
+
+O método que executa a fita tem a seguinte assinatura:
+\begin{minted}{rust}
+pub fn run_tape(&self, tape: Vec<Symbol>) -> bool
+\end{minted}
+
+Ou seja, em uma turing machine, recebendo uma fita (vetor de símbolos), retornamos se é ou não aceito (boleano).
+
+A função basicamente executa um loop, que em cada iteração verifica qual a próxima transição partindo do nosso estado e símbolo atual.
+
+Caso a transição esteja definida, escrevemos o símbolo, trocamos o estado, e andamos com a cabeça de leitura, expandindo a fita conforme nescessário.
+
+Caso não esteja definida, significa que a máquina alcançou estado de halt. Nesse momento, vemos se o estado atual está ou não contido no conjunto de estados finais aceitos, e retornamos isso.
+
+\subsection{Main}
+
+Assim como no trabalho anterior, a main cuida de ler inputs, tratar esses dados, e os repassar para a TuringMachine, construindo a estrutura.
+
+Feito isso, chamamos run\_tape para cada fita inserida no input, imprimindo aceita ou rejeita de acordo com o retorno da função.
+
+\subsection{Qualidade e eficiência}
+A implementação é muito intuitiva e elegante, graças ao determinismo. Acontece simplesmente uma iteração por ação da máquina.
+
+Muito flexível e fácil de expandir, é trivial adicionar funcionalidades interessantes, como imprimir a fita final após o halt.
+\end{document}

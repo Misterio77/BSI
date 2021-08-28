@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project source="2.15.0.2.exe" version="1.0">
+This file is intended to be loaded by Logisim http://logisim.altervista.org
+<lib desc="#Wiring" name="0"/>
+  <lib desc="#Gates" name="1"/>
+  <lib desc="#TTL" name="2"/>
+  <lib desc="#Plexers" name="3">
+    <tool name="Multiplexer">
+      <a name="enable" val="false"/>
+    </tool>
+    <tool name="Demultiplexer">
+      <a name="enable" val="false"/>
+    </tool>
+    <tool name="Decoder">
+      <a name="enable" val="false"/>
+    </tool>
+  </lib>
+  <lib desc="#Arithmetic" name="4"/>
+  <lib desc="#Memory" name="5">
+    <tool name="ROM">
+      <a name="contents">addr/data: 8 8
+0
+</a>
+    </tool>
+  </lib>
+  <lib desc="#I/O" name="6"/>
+  <lib desc="#Base" name="7">
+    <tool name="Text Tool">
+      <a name="text" val=""/>
+      <a name="font" val="Dialog plain 12"/>
+      <a name="color" val="#000000"/>
+      <a name="halign" val="center"/>
+      <a name="valign" val="base"/>
+    </tool>
+  </lib>
+  <main name="main"/>
+  <options>
+    <a name="gateUndefined" val="ignore"/>
+    <a name="simlimit" val="1000"/>
+    <a name="simrand" val="0"/>
+  </options>
+  <mappings>
+    <tool lib="7" map="Button2" name="Poke Tool"/>
+    <tool lib="7" map="Button3" name="Menu Tool"/>
+    <tool lib="7" map="Ctrl Button1" name="Menu Tool"/>
+  </mappings>
+  <toolbar>
+    <tool lib="7" name="Poke Tool"/>
+    <tool lib="7" name="Edit Tool"/>
+    <sep/>
+    <tool lib="7" name="Text Tool">
+      <a name="text" val=""/>
+      <a name="font" val="Dialog plain 12"/>
+      <a name="color" val="#000000"/>
+      <a name="halign" val="center"/>
+      <a name="valign" val="base"/>
+    </tool>
+    <tool lib="0" name="Pin">
+      <a name="tristate" val="false"/>
+    </tool>
+    <tool lib="0" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+    </tool>
+    <tool lib="1" name="NOT Gate"/>
+    <tool lib="1" name="AND Gate"/>
+    <tool lib="1" name="OR Gate"/>
+  </toolbar>
+  <circuit name="main">
+    <a name="circuit" val="main"/>
+    <a name="clabel" val=""/>
+    <a name="clabelup" val="east"/>
+    <a name="clabelfont" val="Dialog plain 12"/>
+    <a name="clabelcolor" val="#000000"/>
+    <wire from="(130,460)" to="(150,460)"/>
+    <wire from="(150,410)" to="(150,460)"/>
+    <wire from="(230,410)" to="(230,460)"/>
+    <wire from="(150,460)" to="(230,460)"/>
+    <wire from="(230,460)" to="(310,460)"/>
+    <wire from="(310,460)" to="(390,460)"/>
+    <wire from="(390,410)" to="(390,460)"/>
+    <wire from="(310,410)" to="(310,460)"/>
+    <wire from="(130,370)" to="(150,370)"/>
+    <wire from="(210,370)" to="(230,370)"/>
+    <wire from="(260,270)" to="(260,280)"/>
+    <wire from="(260,280)" to="(410,280)"/>
+    <wire from="(210,340)" to="(450,340)"/>
+    <wire from="(450,300)" to="(450,340)"/>
+    <wire from="(210,340)" to="(210,370)"/>
+    <wire from="(440,300)" to="(440,330)"/>
+    <wire from="(290,330)" to="(440,330)"/>
+    <wire from="(290,330)" to="(290,370)"/>
+    <wire from="(370,320)" to="(430,320)"/>
+    <wire from="(430,300)" to="(430,320)"/>
+    <wire from="(370,320)" to="(370,370)"/>
+    <wire from="(420,300)" to="(420,310)"/>
+    <wire from="(470,310)" to="(470,370)"/>
+    <wire from="(420,310)" to="(470,310)"/>
+    <wire from="(450,370)" to="(470,370)"/>
+    <wire from="(290,370)" to="(300,370)"/>
+    <wire from="(300,370)" to="(310,370)"/>
+    <wire from="(300,370)" to="(300,480)"/>
+    <wire from="(180,430)" to="(180,450)"/>
+    <wire from="(260,430)" to="(260,450)"/>
+    <wire from="(180,450)" to="(260,450)"/>
+    <wire from="(340,430)" to="(340,450)"/>
+    <wire from="(260,450)" to="(340,450)"/>
+    <wire from="(340,450)" to="(420,450)"/>
+    <wire from="(420,430)" to="(420,450)"/>
+    <wire from="(370,370)" to="(390,370)"/>
+    <wire from="(460,440)" to="(470,440)"/>
+    <wire from="(470,370)" to="(470,440)"/>
+    <wire from="(300,480)" to="(470,480)"/>
+    <wire from="(470,460)" to="(470,480)"/>
+    <wire from="(460,460)" to="(470,460)"/>
+    <comp lib="0" loc="(130,460)" name="Constant"/>
+    <comp lib="7" loc="(457,360)" name="Text">
+      <a name="text" val="Q3"/>
+      <a name="font" val="Dialog plain 12"/>
+    </comp>
+    <comp lib="5" loc="(210,370)" name="T Flip-Flop">
+      <a name="trigger" val="falling"/>
+      <a name="NegatePresetClear" val="true"/>
+    </comp>
+    <comp lib="5" loc="(450,370)" name="T Flip-Flop">
+      <a name="trigger" val="falling"/>
+      <a name="NegatePresetClear" val="true"/>
+    </comp>
+    <comp lib="1" loc="(420,450)" name="NAND Gate">
+      <a name="facing" val="west"/>
+    </comp>
+    <comp lib="7" loc="(301,360)" name="Text">
+      <a name="text" val="Q1"/>
+      <a name="font" val="Dialog plain 12"/>
+    </comp>
+    <comp lib="6" loc="(260,270)" name="Hex Digit Display"/>
+    <comp lib="5" loc="(290,370)" name="T Flip-Flop">
+      <a name="trigger" val="falling"/>
+      <a name="NegatePresetClear" val="true"/>
+    </comp>
+    <comp lib="7" loc="(183,57)" name="Text">
+      <a name="font" val="Dialog plain 12"/>
+    </comp>
+    <comp lib="5" loc="(370,370)" name="T Flip-Flop">
+      <a name="trigger" val="falling"/>
+      <a name="NegatePresetClear" val="true"/>
+    </comp>
+    <comp lib="7" loc="(220,361)" name="Text">
+      <a name="text" val="Q0"/>
+      <a name="font" val="Dialog plain 12"/>
+    </comp>
+    <comp lib="0" loc="(410,280)" name="Splitter">
+      <a name="facing" val="south"/>
+    </comp>
+    <comp lib="7" loc="(380,361)" name="Text">
+      <a name="text" val="Q2"/>
+      <a name="font" val="Dialog plain 12"/>
+    </comp>
+    <comp lib="0" loc="(130,370)" name="Clock">
+      <a name="label" val="CLK"/>
+    </comp>
+  </circuit>
+</project>

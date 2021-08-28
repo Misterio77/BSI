@@ -1,0 +1,66 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix sim:  <http://www.ifi.uio.no/IN3060/simpsons#>.
+@prefix fam:  <http://www.ifi.uio.no/IN3060/family#>.
+
+sim:Homer rdf:type foaf:Person;
+	foaf:age      "36"^^xsd:int;
+	foaf:name     "Homer Simpson";
+	fam:hasSpouse sim:Marge;
+	fam:hasFather sim:Abraham.
+
+sim:Marge rdf:type foaf:Person;
+	foaf:age      "34"^^xsd:int;
+	foaf:name     "Marge Simpson";
+	fam:hasSpouse sim:Homer.
+	
+sim:Bart rdf:type foaf:Person;
+	foaf:age       "10"^^xsd:int;
+	foaf:name      "Bart Simpson";
+	fam:hasFather  sim:Homer;
+	fam:hasMother  sim:Marge;
+	fam:hasSister  sim:Lisa,
+	               sim:Maggie.
+
+sim:Lisa rdf:type foaf:Person;
+	foaf:age       "8"^^xsd:int;
+	foaf:name      "Lisa Simpson";
+	fam:hasFather  sim:Homer;
+	fam:hasMother  sim:Marge;
+	fam:hasBrother sim:Bart;
+	fam:hasSister  sim:Maggie;
+	fam:hasParent  [
+		fam:hasSister  sim:Selma,
+		               sim:Patty;
+		fam:hasBrother sim:Herb;
+	].
+
+sim:Maggie rdf:type foaf:Person;
+	foaf:age       "1"^^xsd:int;
+	foaf:name      "Maggie Simpson";
+	fam:hasFather  sim:Homer;
+	fam:hasMother  sim:Marge;
+	fam:hasBrother sim:Bart;
+	fam:hasSister  sim:Lisa;
+	fam:hasParent  [
+		fam:hasFather sim:Abraham;
+		fam:hasMother sim:Mona;
+	].
+
+sim:Patty rdf:type foaf:Person;
+	fam:hasSister sim:Selma.
+sim:Selma rdf:type foaf:Person;
+	fam:hasSister sim:Patty.
+
+sim:Herb rdf:type foaf:Person.
+sim:Abraham rdf:type foaf:Person.
+sim:Mona rdf:type foaf:Person.
+
+fam:Simpsons rdf:type fam:Family;
+	fam:hasFamilyMember sim:Homer,
+	                    sim:Marge,
+	                    sim:Bart,
+	                    sim:Lisa,
+	                    sim:Maggie.

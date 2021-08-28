@@ -1,0 +1,16 @@
+- Como executar?
+
+Incluimos o executável "executável_windows.exe"
+
+Basta executar como qualquer outro programa de terminal.
+
+No Windows, abra seu cmd, use cd para chegar até o diretório, digite o nome do arquivo, e aperte enter. Basta digitar as entradas (como especificadas na proposta do trabalho), e o output aparecerá no terminal, encerrando o programa.
+
+
+- Onde está o código?
+Os arquivos de código fonte estão localizados dentro da zip "codigo_fonte.zip", na pasta "src". Como explicado no relatório, a lógica principal da máquina fica em "turingmachine.rs", enquanto o tratamento da entrada fica em "main.rs".
+
+
+- Como compilar? (OPCIONAL)
+
+Caso prefira compilar ao invés de usar o executável pré-compilado, você pode baixar o Rust em https://rust-lang.org. Daí basta deszipar o codigo_fonte.zip, e usar o comando "cargo build --release". O executável aparecerá no diretório "target/release/"

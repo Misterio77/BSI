@@ -1,0 +1,24 @@
+search 1
+search 3
+insert 15,"Gabriel","Piruleta","Sistemas de Informacao",8.40
+insert 16,"Joy","Mark","Sistemas de Informacao",6.40
+insert 17,"Clara","Randal","Sistemas de Informacao",5.40
+insert 18,"Stanley","Tim","Sistemas de Informacao",8.60
+insert 19,"Jean","Christopher","Sistemas de Informacao",5.90
+insert 20,"Terri","Rachel","Sistemas de Informacao",9.90
+search 75
+search 8
+search 45
+search 23
+search 15
+search 65
+search 676
+update 18,"Ronaldinho","Gaucho","Monstro Sagrado",8.60
+search 121
+search 7
+search 654
+search 18
+search 71
+search 4798
+search 45
+exit

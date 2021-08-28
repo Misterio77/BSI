@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+\newcommand{\bftab}{\fontseries{b}\selectfont}
+
+\title{SMA0508 - Matemática Discreta \\ Atividade 2}
+\author{Gabriel Fontes - 10856803}
+
+\begin{document}
+\maketitle
+
+\section{}
+Precisamos obter $mdc(94735, 245)$ aplicando o método de Euclides:
+$$\begin{tabular}{ l | c | c | c | r}
+        & 386 & 1   & 2  & 16        \\
+  \hline
+  94735 & 245 & 165 & 80 & \bftab 5  \\
+  \hline
+  165   & 80  & 5   & 0  &           \\
+\end{tabular}$$
+$$\therefore mdc(94735, 245) = 5$$
+
+\section{}
+Vamos escrever $mdc(94735, 245)$ como combinação linear de $94735$ e $245$. \\
+Começando pela última divisão com resto $\ne 0$ temos:
+$$165 = 80 \cdot 2 + 5$$
+Escrevendo o resto como combinação linear do dividendo e quociente:
+$$5 = 1 \cdot 165 - 2 \cdot 80$$
+Agora basta substituir por combinações lineares e simplificar sucessivamente, até chegar no divisor e quociente originais:
+\begin{align*}
+5 &= 1 \cdot 165 - 2 \cdot (1 \cdot 245 - 1 \cdot 165)   \\
+  &= 3 \cdot 165 - 2 \cdot 245                       \\
+  &= 3 \cdot (1 \cdot 94735 - 386*245) - 2 \cdot 245   \\
+  &= \mathbf{3} \cdot 94735 -\mathbf{1160} \cdot 245
+\end{align*}
+Sendo essa a combinação linear que queríamos encontrar.
+\begin{align*}
+\therefore r &= 5 \\
+s &= 1160
+\end{align*}
+
+\section{}
+Supondo um $d \in \mathbb{Z}$ tal que $ d|a$ e $d|b$. Vamos lembrar da definição de "divide", $\exists x \in \mathbb{Z}$ se e somente se:
+$$x \cdot d = a$$
+$$x \cdot d = b$$
+Agora vamos tomar $r$ e $s$ previamente enunciados, lembrando que $r, s \in \mathbb{Z}$. Pela definição de "divide", podemos afirmar que um número divisível por outro continuará divisível se multiplicado por um inteiro (já que $x$ é um inteiro qualquer). Sendo assim:
+$$d|a \implies d | r \cdot a$$
+$$d|b \implies d | s \cdot b$$
+Um número que divide dois números também divide a soma desses números, ou seja:
+$$d |(r \cdot a + s \cdot b)$$
+Já vimos que $r \cdot a + s \cdot b = 1$, então sabemos que:
+$$d|1$$
+Voltando a definição, temos:
+$$x \cdot d = 1$$
+A única maneira de uma multiplicação entre dois inteiros resultar em $1$ é se ambos forem $1$ (ou $-1$).
+Sendo assim, $d = 1$. A única maneira de $mdc(a,b) = 1$ é se $a$ e $b$ forem primos.
+
+\section{}
+
+\end{document}

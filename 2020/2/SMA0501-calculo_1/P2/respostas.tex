@@ -1,0 +1,104 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\renewcommand\thesubsection{\alph{subsection})}% chktex 9 chktex 10
+\title{SMA0501 - Cálculo I \\ P2 - Parte 1}% chktex 8
+\author{Gabriel Fontes - 10856803}% chktex 8
+
+\begin{document}
+\maketitle
+Eu, Gabriel Silva Fontes, estou apresentando, a seguir, minhas próprias soluções para as atividades propostas na P2 - PARTE I. % chktex 8
+Atesto que me dediquei as mesmas, seja individualmente, seja em colaboração com outro/as colegas.
+Nos casos em que a discussão com colegas tenha resultado em soluções descritas de modo semelhante às de outro/as aluno/as, atesto que entendo a resolução apresentada no material individual que estou entregando.
+
+\section{}
+\[
+    \lim_{x\rightarrow 0}(f(x)g(x)+\cos x)
+    = \lim_{x\rightarrow 0}f(x) \cdot \lim_{x\rightarrow 0}g(x) + \lim_{x\rightarrow 0}\cos x \\
+\]
+Calculando o limite de \(f(x)\):
+\begin{align*}
+    & \lim_{x\rightarrow 0}\abs{\sin{x}} \leq \lim_{x\rightarrow 0}f(x) \leq \lim_{x\rightarrow 0}3\abs{x} \\
+    &\implies \abs{\sin{0}} \leq \lim_{x\rightarrow 0}f(x) \leq 3\abs{0} \\
+    &\implies 0 \leq \lim_{x\rightarrow 0}f(x) \leq 0 \\
+    &\implies \lim_{x\rightarrow 0}f(x) = 0
+\end{align*}
+Para podermos multiplicar \(g(x)\) por \(f(x) = 0\), vamos verificar o seu limite (em especial, se é limitado):
+\begin{align*}
+    & 0 \leq \lim_{x\rightarrow 0} g(x) \leq \lim_{x\rightarrow 0} (1 + \abs{\sin x}) \\
+    &\implies 0 \leq \lim_{x\rightarrow 0} g(x) \leq 1
+\end{align*}
+Dessa forma, podemos afirmar, pelo teorema do confronto:
+\begin{align*}
+    \lim_{x\rightarrow 0} f(x)\cdot g(x)
+    &= \lim_{x\rightarrow 0} f(x) \cdot \lim_{x\rightarrow 0} g(x) \\
+    &= 0 \cdot \lim_{x\rightarrow 0} g(x) \\
+    &= 0
+\end{align*}
+Substituindo no enunciado:
+\begin{align*}
+    \lim_{x\rightarrow 0} (f(x)\cdot g(x) + \cos{x})
+    &= \lim_{x\rightarrow 0} \cos{x} \\
+    &= \cos{0} \\
+    &= 1
+\end{align*}
+
+\section{}
+O erro ocorre na multiplicação em \(\lim_{x\rightarrow +\infty} (x\cdot0)\), pois não é correto operar em uma indeterminação, isto é, o seguinte está incorreto:
+\begin{align*}
+    \lim_{x\rightarrow +\infty} (x\cdot0)
+    &= \lim_{x\rightarrow +\infty} x \cdot \lim_{x\rightarrow +\infty} 0\\
+    &= \infty \cdot 0 \\
+    &= 0
+\end{align*}
+
+Calculando da maneira correta:
+\begin{align*}
+    \lim_{x\rightarrow +\infty} \sqrt{x^2+x}-x
+    &= \lim_{x\rightarrow +\infty} \sqrt{x^2+x}-x \cdot \lim_{x\rightarrow +\infty} \frac{\sqrt{x^2+x}+x}{\sqrt{x^2+x}+x} \\
+    &= \lim_{x\rightarrow +\infty} \frac{x}{\sqrt{x^2+x}+x} \\
+    &= \lim_{x\rightarrow +\infty} \frac{1}{\sqrt{1+\frac{1}{x}}+1} \\
+    &= \frac{\lim_{x\rightarrow +\infty} 1}{\lim_{x\rightarrow +\infty} \sqrt{1+\frac{1}{x}}+1} \\
+    &= \frac{1}{2}
+\end{align*}
+
+\section{}
+\subsection{}
+\begin{align*}
+    \lim_{x\rightarrow 2} \frac{f(x)}{x}
+    &= \lim_{x\rightarrow 2} \frac{f(x)}{x} \cdot \lim_{x\rightarrow 2} \frac{x}{x} \\
+    &= \lim_{x\rightarrow 2} \frac{f(x)}{x} \cdot \lim_{x\rightarrow 2} \frac{1}{x} \cdot \lim_{x\rightarrow 2} x \\
+    &= \lim_{x\rightarrow 2} \frac{f(x)}{x^2} \cdot \lim_{x\rightarrow 2} x \\
+    &= 1 \cdot 2 = 2
+\end{align*}
+\subsection{}
+\begin{align*}
+    \lim_{x\rightarrow 0} f(x)
+    &= \lim_{x\rightarrow 0} f(x) \cdot \lim_{x\rightarrow 0} \frac{x}{x} \\
+    &= \lim_{x\rightarrow 0} f(x) \cdot \lim_{x\rightarrow 0} \frac{1}{x} \cdot \lim_{x\rightarrow 0} x \\
+    &= \lim_{x\rightarrow 0} \frac{f(x)}{x} \cdot \lim_{x\rightarrow 0} x \\
+    &= 0 \cdot 0 = 0
+\end{align*}
+\subsection{}
+\begin{align*}
+    \lim_{x\rightarrow +\infty} f(x)
+    &= \lim_{x\rightarrow +\infty} f(x) \cdot \lim_{x\rightarrow +\infty} \frac{x^2+x}{x^2+x} \\
+    &= \lim_{x\rightarrow +\infty} f(x) \cdot \lim_{x\rightarrow +\infty} \frac{1}{x^2+x} \cdot \lim_{x\rightarrow +\infty} x^2+x \\
+    &= \lim_{x\rightarrow +\infty} \frac{f(x)}{x^2+x} \cdot \lim_{x\rightarrow +\infty} x^2+x \\
+    &= +\infty
+\end{align*}
+
+\end{document}

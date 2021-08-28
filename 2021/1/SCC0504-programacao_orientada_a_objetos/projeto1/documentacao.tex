@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{minted}
+
+\usepackage[portuguese]{babel}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SCC0504 \\ Programação Orientada a Objetos \\ Trabalho 1}
+\author{Gabriel Fontes | 10856803
+    \and
+    Vinicius Baca | 10788589
+    }
+
+\begin{document}
+\maketitle
+
+\section{Plataforma}
+O projeto foi desenvolvido em Rust.
+
+Por ser uma linguagem de baixo nível, algumas funcionalidades (presentes, por exemplo, na std do Java) precisam ser implementadas ou utilizada alguma dependência. Em especial a questão gráfica.
+
+Optamos por utilizar um sistema ECS (Entity Control System) bem barebones para o projeto, este se chama Bevy. O Bevy contém algumas ferramentas que seriam trabalhosas de se implementar corretamente no Rust, como, por exemplo, a questão gráfica (janelas, renderização de sprites), um event loop (threaded), sincronização de estado mutável (também threaded), e levantamento de eventos.
+
+Fora esses componentes (que são muito menos que os equivalentes fornecidos em Java), toda a lógica e técnica do jogo foi implementada do zero, sem ferramentas externas.
+
+Num sistema ECS, é preferível agregação à composição e herança. No Rust também é bastante comum utilizar Enums (além dos Traits, que são interfaces) para atingir polimorfismo, técnica bastante empregada no Bevy e no nosso jogo.
+
+As sprites foram extraídas do jogo com captura de tela, e re-desenhadas em 8x8 ou 16x16 pixels. Algumas delas são sheets (para animações e direções diferentes), e algumas também foram dessaturadas (para reutilização da mesma sprite para várias cores).
+
+\section{Instruções}
+\subsection{Cargo}
+Caso não tenha, instale com o apt (no caso do Ubuntu):
+\mint{bash}|sudo apt install cargo|
+
+\subsection{Compilação}
+Basta entrar dentro da pasta `codigo', e utilizar o cargo:
+\mint{bash}|cargo build --release|
+Pode demorar um ou dois minutos, por ter algumas dependências.
+
+\subsection{Execução}
+Também com o cargo, dentro da pasta `código':
+\mint{bash}|cargo run --release|
+
+\section{Esclarecimentos}
+O jogo segue fielmente as mecânicas do Skooter (em especial o cooldown de movimento), mas não conseguimos implementar a animação gradual de movimento entre posições. Mesmo assim, é possível prever o movimento dos robôs se baseando na direção em que estão olhando.
+
+\end{document}

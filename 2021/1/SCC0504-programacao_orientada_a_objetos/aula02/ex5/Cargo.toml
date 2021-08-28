@@ -1,0 +1,12 @@
+[package]
+name = "aula02-ex5"
+description = "Lista 2 da matéria SCC0504 - Exercício 5"
+version = "0.1.0"
+authors = ["Gabriel Fontes <g.fontes@usp.br", "Vinicius Baca <viniciusfbaca@usp.br"]
+license = "MIT"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rand = "0.8"

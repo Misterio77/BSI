@@ -1,0 +1,54 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+\usepackage[portuguese]{babel}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SCC0505 \\ Introdução à Teoria da Computação \\ Prova 1}
+\author{Gabriel Silva Fontes | 10856803}
+
+\begin{document}
+\maketitle
+
+\section{}
+\subsection{}
+\[
+    S \rightarrow 0S1|011
+\]
+
+\subsection{}
+É possível com o autômato de pilha (APN), está no arquivo 1b.jff.
+
+\section{}
+\subsection{}
+É possível, está no arquivo 2a.jff.
+\subsection{}
+\[(1+2+3) *+321+(1+2+3) *\]
+
+\section{}
+\subsection{}
+Está no arquivo 3a.jff.
+\subsection{}
+\begin{align*}
+    S &\rightarrow aA | bC | \lambda \\
+    A &\rightarrow aS | bB \\
+    B &\rightarrow bA | aC \\
+    C &\rightarrow aB | bS
+\end{align*}
+\subsection{}
+Está no arquivo 3c.jff.
+
+É não determinístico. Ao processar o símbolo \(a\) ou \(b\) com um \(Z\) na pilha, além das transições \(a,Z,A\) e \(b,Z,B\), a transição \(\lambda,Z,\lambda\) também é possível.
+
+\end{document}

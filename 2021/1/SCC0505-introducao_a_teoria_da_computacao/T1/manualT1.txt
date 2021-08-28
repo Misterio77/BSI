@@ -1,0 +1,18 @@
+- Como executar?
+
+Incluimos o executável "ExecutavelWindows.exe"
+
+Basta executar como qualquer outro programa de terminal.
+
+Abra seu cmd, use cd pra chegar até o diretório, digite o nome do arquivo, e aperte enter. Basta digitar as entradas (como especificadas na proposta do trabalho), e o output aparecerá no terminal.
+
+
+
+- Onde está o código?
+Os arquivos de código fonte estão localizados na pasta "Programa", dentro da pasta "src".
+
+
+
+- Como compilar? (OPCIONAL)
+
+Caso prefira compilar ao invés de usar o executável pré-compilado, você pode baixar o Rust em https://rust-lang.org. Daí basta entrar na pasta "Programa", e usar o comando "cargo build --release". O executável aparecerá no diretório "target/release/"

@@ -1,0 +1,154 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{minted}
+\usepackage{hyperref}
+
+
+\usepackage[portuguese]{babel}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\title{SCC0505 \\ Introdução à Teoria da Computação \\ Trabalho 1}
+\author{Gabriel Silva Fontes | 10856803
+        \and
+        Amanda Lindoso Figueiredo | 10784306
+        \and
+        Rafael Doering Soares | 10408410
+        \and
+        Felipe Moreira Neves de Souza | 10734651}
+
+\begin{document}
+\maketitle
+\section{Sobre a solução}
+A solução é robusta e funciona com DFAs e NFAs. Suportando um número de estados, símbolos, e transições praticamente infinito (dentro dos limites da memória do computador).
+
+Fomos um passo além, e demos suporte também a cadeias e transições vazias (\(\epsilon\)). Suportando, assim, um NFA-\(\epsilon\).
+
+É possível refatorar o programa para que o autômato aceite qualquer tipo de dado genérico como estado e símbolo. Podendo assim, talvez, ser utilizado para resolver problemas computacionais interessantes.
+
+\section{O código}
+\subsection{Linguagem e paradigma}
+O código foi construído com a linguagem Rust, principalmente com o paradigma de Programação Orientada a Objetos, e algumas funcionalidades comumente presente em linguagens funcionais (iteradores, closures, etc).
+
+\subsection{Estrutura Automaton}
+No arquivo src/automaton.rs, temos a estrutura e métodos do autômato.
+A definição da estrutura é:
+
+\begin{minted}{rust}
+pub struct Automaton {
+    graph: Graph<(Option<u16>, bool), Option<char>>,
+    initial_state: NodeIndex,
+}
+\end{minted}
+
+Ela é formada por um grafo, cujos nós são uma tupla Option\footnote{No Rust, Option representa um tipo nulável. O valor do nó é nulável para dar suporte ao estado inicial, que não tem um valor. Também usamos nas arestas, onde o nulo representa uma aresta \(\epsilon\)} u16\footnote{u16 significa unsigned integer com 16 bits} e boolean. O u16 representa o estado, e a boolean marca se ele é ou não um estado final aceitável. As arestas são compostas por Option char, representando um símbolo na linguagem.
+
+Também temos o índice do grafo onde está localizado o estado inicial.
+
+\subsection{Construtor}
+Essa classe possui um construtor (método new), cuja assinatura é:
+
+\begin{minted}{rust}
+pub fn new(
+    states: &[u16],
+    initial_states: &[u16],
+    accepted_states: &[u16],
+    transitions: &[(u16, char, u16)],
+) -> Result<Automaton>
+\end{minted}
+
+Esse método toma um vetor de estados, um vetor de estados iniciais, um vetor de estados aceitáveis, e um vetor de transições. Retornando um Automaton construído.
+
+O construtor se encarrega de alocar e inicializar o grafo, adicionar o nó inicial (os nós ``iniciais'' passados pelo usuário serão ligados a este por \(\epsilon\)), adicionar os nós de estados, e relacionar eles com as arestas (transições).
+
+\subsection{Método de verificação}
+
+Nossa classe oferece o componente de simulação como um método. Sua parte pública tem a seguinte assinatura:
+\begin{minted}{rust}
+pub fn verify_chain(&self, chain: &[char]) -> bool
+\end{minted}
+
+Esse método se encarrega de ser o caller inicial de um outro método (recursivo, por isso separado), com o nó (estado) inicial.
+
+A função recursiva interna tem a seguinte assinatura:
+\begin{minted}{rust}
+fn verify_chain_inner(
+    &self,
+    current &NodeIndex,
+    visited: Vec<&NodeIndex>,
+    chain: &[char]
+) -> bool
+\end{minted}
+
+Tomando um nó inicial, um vetor listando os nós que foram deixados por uma transição \(\epsilon\) (para evitar que uma transição \(\epsilon\) faça um loop infinito) e a cadeia a ser verificada, essa função trabalha de maneira recursiva para buscar qualquer caminho que lhe proporcionaria alcançar um nó aceito ao finalizar a cadeia.
+
+Primeiro, é feita uma verificação se a cadeia chegou ao fim \textbf{e} o estado atual é aceitável, nesse caso retornamos true, sinalizando que a cadeia foi aceita.
+
+Caso isso não aconteça, buscamos as arestas que correspondem ao símbolo atual, chamando a função novamente nos estados que vêm depois de todas essas (e propagando a aceitação, caso ocorra).
+
+Depois desses casos (ou seja, menor preferência), filtramos apenas as arestas \(\epsilon\) saindo do nosso nó atual, e então chamamos a função nos estados que seguem estas transições (novamente, propagando a aceitação, caso ocorra). Nesse caso, passamos para a função o vetor de visitas, adicionando o nó que estamos deixando (para evitar retornar à ele e causar uma recursão infinita e stack overflow, como mencionado).
+
+No fim de tudo isso (ou seja, não temos mais \(\epsilon\) ou símbolo na cadeia para seguir, e não estamos num nó aceito), retornamos false, sinalizando rejeição daquela tentativa.
+
+
+Pela natureza recursiva, esse método conseguirá verificar de forma exaustiva aquela cadeia. Incluindo possibilidades como passar por um \(\epsilon\), ir e voltar de um nó, etc.
+
+\subsection{Arquivo main}
+Por uma questão de organização e encapsulamento, a lógica que se refere à entrada do usuário é contida no arquivo src/main.rs.
+
+Esse código tem acesso à estrutura e métodos de Automaton, e se encarrega de ler, analisar, e chamar os métodos construtores e de verificação da estrutura Automaton.
+
+Aqui temos uma estrutura representando a entrada, e um método para a receber da entrada padrão. Após sua leitura, iteramos pelas cadeias, chamando o método verify\_chain em cada uma, e imprimindo na tela se são aceitas ou não:
+
+\begin{minted}{rust}
+fn main() -> Result<()> {
+    // Inicializar stdin
+    let stdin = stdin();
+    // Travar stdin e ler input
+    // (estados, estados iniciais, estados aceitos, transições, e cadeias)
+    let input = Input::from_reader(&mut stdin.lock())?;
+
+    // Criar automato com os dados recebidos
+    let automaton = Automaton::new(
+        &input.states,
+        &input.initial_states,
+        &input.accepted_states,
+        &input.transitions,
+    )?;
+
+    // Para cada cadeia
+    for chain in input.chains {
+        // Verificar se aceita ou rejeita
+        if automaton.verify_chain(&chain) {
+            println!("aceita")
+        } else {
+            println!("rejeita")
+        }
+    }
+
+    Ok(())
+}
+\end{minted}
+\section{Qualidade e eficiência}
+Como mencionado anteriormente, é trivial alterar o programa para se obter uma implementação com Generics, permitindo o uso de qualquer tipo primitivo ou estrutura de dados no lugar dos estados e dos símbolos, sendo possível reutilizar o programa para  problemas potencialmente interessantes.
+
+Sobre a linguagem, Rust emprega um verificador de memória conhecido como \textit{borrow checker}. Esta funcionalidade garante destrução da memória sem um garbage collector, e ótimas verificações (null pointer, dangling pointers, etc) já na compilação. Temos assim um código relativamente enxuto e intuitivo, com a mesma performance de linguagens com menos verificações de segurança.
+
+A utilização de um grafo com acesso aleatório (em tempo \(O(1)\)) e tamanho pré-determinado permite uma grande eficiência ao inserir, acessar, buscar e filtrar arestas e nós da estrutura.
+
+Na criação do autômato, percorremos uma única vez os estados e as arestas, sendo assim, esta operação tem complexidade (sendo \(e\) o número de estados e \(t\) o número de transições) \(O(e+t)\).
+
+O método de verificação é um pouco mais complicado. Pela natureza recursiva, o pior caso, pode potencialmente visitar cada nó, para cada nó. Sendo assim, assume-se \(O(e^2)\).
+
+A complexidade de espaço é a mínima possível. O armazenamento mais significativo na memória é o grafo, que contém os dados dos nós e arestas, apenas. Logo \(O(e+t)\).
+
+\end{document}

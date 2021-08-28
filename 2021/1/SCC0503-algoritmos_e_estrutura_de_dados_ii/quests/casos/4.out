@@ -1,0 +1,31 @@
+Quest{
+	ID= '8'
+	name= 'Elder Care'
+	description= 'Help the village Elder'
+}
+
+Quest{
+	ID= '9'
+	name= 'Second Intentions'
+	description= 'Make the Elder tell you about the Demon Lord'
+}
+
+Quest{
+	ID= '5'
+	name= 'Hell's Door'
+	description= 'You must find the entrance to the Demon Lord's Castle'
+}
+
+Quest{
+	ID= '6'
+	name= 'Cleaning the House'
+	description= 'Kill all the guardians of the Demon Lord'
+}
+
+Quest{
+	ID= '7'
+	name= 'Showdown'
+	description= 'Face the last fierce battle and kill the Demon Lord'
+}
+
+

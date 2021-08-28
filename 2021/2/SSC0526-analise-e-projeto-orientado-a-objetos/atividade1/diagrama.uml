@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+
+actor Cliente as client
+
+usecase (Inserir cartão na entrada) as in_card
+usecase (Imprimir bilhete na entrada) as in_ticket
+usecase (Pagar bilhete) as pay_ticket
+
+usecase (Inserir bilhete na saída) as out_ticket
+usecase (Inserir cartão na saída) as out_card
+
+usecase (Validar bilhete) as validate_ticket
+usecase (Validar cartão) as validate_card
+
+usecase (Registrar entrada) as register_in
+usecase (Registrar saída) as register_out
+
+in_card --> register_in
+in_ticket --> register_in
+
+in_card --> validate_card
+
+out_ticket --> validate_ticket
+
+client --> in_card
+client --> in_ticket
+client --> out_card
+client --> out_ticket
+client --> pay_ticket
+
+@enduml

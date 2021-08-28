@@ -1,0 +1,3 @@
+warmup_reload
+*.o
+vgcore*

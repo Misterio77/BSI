@@ -1,0 +1,100 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage[portuguese]{babel}
+
+%Reduce part, section and subsection font sizes
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+
+\renewcommand\thesubsubsection{\alph{subsubsection})}% chktex 9 chktex 10
+
+\title{SMA0501 - Cálculo I \\ ATR 4}% chktex 8
+\author{Gabriel Fontes - 10856803}% chktex 8
+
+\begin{document}
+\maketitle
+
+\section{}
+\subsection{}
+\[
+	\lim_{x \rightarrow 5} 7x - 3 = 7(5) - 3 = 32
+\]
+\subsection{}
+\[
+	\lim_{x \rightarrow -2} x^2 - 7x - 2 = {(-2)}^2 - 7(-2) -2 = 16
+\]
+\subsection{}
+\begin{align*}
+	&\lim_{x \rightarrow 1} 5x^5 + 4x^4 + 3x^3 + 2x^2 + x + 1 \\
+	&= 5{(1)}^5 + 4{(1)}^4 + 3{(1)}^3 + 2{(1)}^2 + 1 + 1 \\
+	&= 5+4+3+2+1+1 = 16
+\end{align*}
+
+\section{}
+\subsection{}
+\[
+	Dom(f) = \{x \in \mathbb{R} | x \ne -1\}
+\]
+A fatoração da função é feita assim:
+\begin{align*}
+	\frac{x^3 + 1}{x^2 + 4x +3} &= \frac{(x+1)\cdot(x^2-x+1)}{(x+1)\cdot(x+3)}\\
+	&= \frac{x^2 - x +1}{x+3}\text{, para \(x \ne -1\)} 
+\end{align*}
+\subsection{}
+O docente está encontrando uma função ``igual'' a \(f\).
+Encontrando uma função \(g\) que coincide com \(f\) no intervalo próximo ao ponto desejado (mesmo que não coincidam no ponto em si), temos que ambas possuem o mesmo limite no ponto (caso esse limite exista).
+
+\subsection{}
+Quando um polinônio \(p(x)\) tem uma raiz \(r\), é possível dividí-lo por \((x-r)\). Por ambos os polinômios (numerador e denominador) de uma função racional terem uma raiz em comum, é possível dividir ambos por esse termo e, então, simplificar a função.
+
+A função \(g\) encontrada simplificando \(f\) desta maneira, por definição, terá todos os seus valores coincidindo com os de \(f\) (onde estiver definida), ou seja, tendendo a qualquer ponto, os limites de \(f\) e \(g\) serão iguais (caso existam).
+
+Caso \(g\) for contínua num ponto \(p\), o limite de \(g\) tendendo a este ponto será igual a \(g(x)\).
+
+Unindo tudo isso temos que, caso \(f\) seja uma simplificação de \(g\) e \(g\) seja contínua num ponto \(p\):
+\[
+	\lim_{x \rightarrow p} f(x) = \lim_{x \rightarrow p} g(x) = g(p)
+\]
+
+\section{}
+\subsection{}
+TODO
+
+\section{}
+
+\section{}
+\subsection{}
+Na ordem em que foram feitos pelo prof. Aurichi:
+\begin{align*}
+	Dom(f) &= \{x \in \mathbb{R} | x \ne 1\} \\
+	Dom(f) &= \{x \in \mathbb{R} | x \notin\{-3, 3\}\} \\
+	Dom(f) &= \{x \in \mathbb{R} | x \ne 3\} 
+\end{align*}
+\subsection{}
+\subsubsection{}
+\begin{align*}
+	\lim_{x\rightarrow 1} \frac{x^3 + x^2 - x - 1}{x-1} &= \lim_{x\rightarrow 1} \frac{{(x+1)}^2 \cdot (x-1)}{x-1} \\
+	&= \lim_{x\rightarrow 1} {(x+1)}^2 \\
+	&= 2^2 \\
+	&= 4
+\end{align*}
+\subsubsection{}
+\begin{align*}
+	\lim_{x\rightarrow 3} \frac{x^3 - 3x^2 + 5x - 15}{x^2 - 9} &= \lim_{x\rightarrow 3} \frac{(x - 3)\cdot(x^2 + 5)}{(x+3)\cdot(x-3)} \\
+	&= \lim_{x\rightarrow 3} \frac{x^2 + 5}{x + 3} \\
+	&= \frac{3^2 + 5}{3+3} \\
+	&= \frac{8}{3}
+\end{align*}
+\subsubsection{}
+\begin{align*}
+	\lim_{x\rightarrow 3} \frac{x^3 - x^2 - 21x + 45}{x^2 - 6x + 9} &= \lim_{x\rightarrow 3} \frac{{(x-3)}^2\cdot(x+5)}{{(x-3)}^2} \\
+	&= \lim_{x\rightarrow 3} (x+5) \\
+	&= 8
+\end{align*}
+\end{document} 

@@ -1,0 +1,41 @@
+insert 3,"Tim","Elizabeth","Sistemas de Informacao",7.90
+insert 1,"Jenny","Steven","Sistemas de Informacao",0.50
+insert 2,"Vincent","Hester","Sistemas de Informacao",1.60
+insert 4,"Marie","Tim","Sistemas de Informacao",0.80
+insert 5,"Anita","Andrea","Sistemas de Informacao",3.80
+insert 16,"Joy","Kacey","Sistemas de Informacao",8.80
+insert 17,"Clara","Benjamin","Sistemas de Informacao",3.70
+insert 18,"Stanley","Evan","Sistemas de Informacao",3.20
+insert 19,"Jean","Alma","Sistemas de Informacao",8.30
+insert 20,"Terri","Roberto","Sistemas de Informacao",5.90
+insert 21,"Robert","Sandra","Sistemas de Informacao",3.60
+insert 22,"Laurette","Garrett","Sistemas de Informacao",4.20
+insert 23,"Brandon","Gladys","Sistemas de Informacao",6.50
+insert 24,"Jason","Sheron","Sistemas de Informacao",8.00
+insert 25,"James","John","Sistemas de Informacao",4.20
+insert 26,"Jean","Emily","Sistemas de Informacao",2.20
+insert 27,"Duane","William","Sistemas de Informacao",2.20
+insert 28,"James","Hugh","Sistemas de Informacao",2.60
+insert 29,"Raymond","Augusta","Sistemas de Informacao",6.30
+insert 30,"Jimmy","Deborah","Sistemas de Informacao",1.40
+insert 31,"Beverly","Gregory","Sistemas de Informacao",4.80
+insert 32,"Darryl","Scott","Sistemas de Informacao",1.10
+insert 33,"Elizabeth","Karen","Sistemas de Informacao",5.30
+insert 34,"Pauline","John","Sistemas de Informacao",1.80
+insert 35,"Patty","Connie","Sistemas de Informacao",9.30
+insert 36,"Terence","Hester","Sistemas de Informacao",1.10
+insert 37,"Fernando","Gary","Sistemas de Informacao",3.50
+insert 38,"Robert","Majorie","Sistemas de Informacao",9.90
+insert 39,"Brandon","Heather","Sistemas de Informacao",7.50
+insert 40,"Carl","Carl","Sistemas de Informacao",8.60
+insert 41,"James","Tierra","Sistemas de Informacao",7.20
+insert 42,"Stephanie","Carl","Sistemas de Informacao",1.90
+insert 43,"Jeff","Carl","Sistemas de Informacao",4.40
+insert 44,"Kacey","Mary","Sistemas de Informacao",5.60
+insert 45,"Anne","Elizabeth","Sistemas de Informacao",4.00
+insert 46,"Gregory","Cynthia","Sistemas de Informacao",0.10
+search 1
+search 5
+search 46
+search 3562
+exit

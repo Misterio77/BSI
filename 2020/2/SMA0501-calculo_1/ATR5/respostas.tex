@@ -1,0 +1,274 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{commath}
+\usepackage{systeme}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[portuguese]{babel}
+\pgfplotsset{compat=1.17}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+%Reduce part, section and subsection font sizes
+\usepackage[small]{titlesec}
+\titleformat{\part}[display]
+  {\normalfont\large\bfseries}{\partname\ \thepart}{14pt}{\Large}
+\usepackage{xpatch}
+\xpretocmd{\part}{\setcounter{section}{0}}{}{}
+
+\tikzset{
+  jumpdot/.style={mark=*,solid},
+  excl/.append style={jumpdot,fill=white},
+  incl/.append style={jumpdot,fill=black},
+}
+\renewcommand\thesubsubsection{\alph{subsubsection})}% chktex 9 chktex 10
+
+\title{SMA0501 - Cálculo I \\ ATR 5}% chktex 8
+\author{Gabriel Fontes - 10856803}% chktex 8
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Def}
+
+\begin{document}
+\maketitle
+\part*{Aula 10 - A}% chktex 8
+\section{}
+\subsection{}
+\begin{definition}
+	Dizemos que \(f\) tem limite \(L_2 \in \mathbb{R}\), quando \(x\) tende a \(p\) pela direita se dado \(\epsilon > 0\), \(\exists \delta > 0\) tal que para \(p < x < p+\delta\) temos:
+	\[
+		\abs{f(x) - L_2} < \epsilon
+	\]
+\end{definition}
+
+\subsection{}
+\subsubsection{}
+Como \(x\) tende a \(2\) pela direita, isso significa que ele é estritamente \(> 2\), isto é, \(x-2 > 0\). Assim, \(\abs{x-2} = x-2\):
+\[
+	\lim_{x\rightarrow2^+} \frac{2\cdot(x-2)}{x-2} = 2
+\]
+\subsubsection{}
+Como \(x\) tende a \(2\) pela esquerda, isso significa que ele é estritamente \(< 2\), isto é, \(x-2 < 0\). Assim, \(\abs{x-2} = -(x-2)\):
+\[
+	\lim_{x\rightarrow2^-} \frac{-2\cdot(x-2)}{x-2} = -2
+\]
+\subsubsection{}
+Como \(x\) tende a \(1\) pela direita, isso significa que \(\sqrt{x} > 1\), isto é, \(\sqrt{x}-1 > 0\). Assim, \(\abs{\sqrt{x}-1} = \sqrt{x} -1\):
+\[
+	\lim_{x \rightarrow 1^+} \frac{\sqrt{x}-1}{x-1} = \lim_{x \rightarrow 1^+} \frac{1}{\sqrt{x}+1} = \frac{1}{\sqrt{1}+1} = \frac{1}{2}
+\]
+\subsubsection{}
+Como \(x\) tende a \(1\) pela esquerda, isso significa que \(\sqrt{x} < 1\), isto é, \(\sqrt{x}-1 < 0\). Assim, \(\abs{\sqrt{x}-1} = -(\sqrt{x} -1)\):
+\[
+	\lim_{x \rightarrow 1^+} \frac{-(\sqrt{x}-1)}{x-1} = \lim_{x \rightarrow 1^+} -\frac{1}{\sqrt{x}+1} = -\frac{1}{\sqrt{1}+1} = -\frac{1}{2}
+\]
+
+\subsection{}
+Verdadeira. Como enunciado, para \(f\) ser contínua em \(p=2\), precisamos que \(\lim_{x \rightarrow 2}f(x) = f(2)\). Como calculamos na questão \(1.2\):
+\begin{align*}
+	\lim_{x\rightarrow2^+} \frac{2\abs{x-2}}{x-2} &= 2 \\
+	\lim_{x\rightarrow2^-} \frac{2\abs{x-2}}{x-2} &= -2
+\end{align*}
+
+Como \(2 \ne -2\), \(\lim_{x\rightarrow 2} f(x)\) não existe, logo diferente de \(f(2)\), e a função não é contínua.
+
+\subsection{}
+Não. Como vimos no exercício \(1.2\), os limites laterais de \(g\) pela esquerda e direita não coincidem (\(-\frac{1}{2}\) e \(\frac{1}{2}\), respectivamente), logo não há valor de \(g(1)\) igual a \(\lim_{x\rightarrow 1}g(x)\), já que esse limite não existe.
+
+\subsection{}
+Na P1 acabei fazendo com limites laterais também. Segue aqui minhha resolução:
+
+Gráfico \(y = \ceil{x}\):
+
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle]
+	\addplot+[jump mark right,samples at={-5,-4,...,5}] {ceil(x)};
+	\end{axis}
+\end{tikzpicture}
+
+Para uma função ser contínua num ponto, o limite precisa existir nesse ponto. Isto é, o limite pela direita e o limite pela esquerda devem ser iguais. Vamos tomar \(x=1\). Como é visível no gráfico:
+\begin{align*}
+	\lim_{x\rightarrow 1+} \ceil{x} &= 2 \\
+	\lim_{x\rightarrow 1-} \ceil{x}  &= 1
+\end{align*}
+Não coincidem. Logo o limite não existe e \(f\) não é contínua em \(x=1\), logo não é contínua em todo \(p \in \mathbb{Z}\).
+
+Caso você tome \(p\) como membro do conjunto \((n, n+1]\), \(n \in \mathbb{Z}\). Nesse intervalo, o único valor que \(f(p)\) pode assumir é o próprio \(n\). Dessa maneira, temos uma função constante, que é contínua.
+
+
+
+\section{}
+\subsection{}
+\subsubsection{}
+\[
+	\lim_{x\rightarrow +\infty} \frac{1}{x+5} = 0
+\]
+Dado \(\epsilon > 0\), tome \(\delta = \frac{1}{\epsilon +5}\):
+\begin{align*}
+	x > \delta = \frac{1}{\epsilon+5}
+	&\implies \frac{1}{x+5} < \epsilon \\
+	&\implies \abs{\frac{1}{x+5} - 0} < \epsilon \\
+	&\implies \abs{f(x) - 0} < \epsilon
+\end{align*}
+\subsubsection{}
+\[
+	\lim_{x\rightarrow +\infty} \frac{1}{5x} = 0
+\]
+Dado \(\epsilon > 0\), tome \(\delta = \frac{1}{5\epsilon}\):
+\begin{align*}
+	x > \delta = \frac{1}{5\epsilon}
+	&\implies \frac{1}{5x} < \epsilon \\
+	&\implies \abs{\frac{1}{5x} - 0} < \epsilon \\
+	&\implies \abs{f(x) - 0} < \epsilon
+\end{align*}
+\subsubsection{}
+TODO
+
+\subsection{}
+\subsubsection{}
+O limite do produto é o produto dos limites, então:
+\begin{align*}
+	\lim_{x\rightarrow + \infty} \frac{1}{x^5}
+	&= \lim_{x\rightarrow + \infty} \frac{1}{x} \cdot \frac{1}{x} \cdot \frac{1}{x}  \cdot \frac{1}{x}  \cdot \frac{1}{x} \\
+	&= \lim_{x\rightarrow +\infty} \frac{1}{x} \cdot \lim_{x\rightarrow +\infty} \frac{1}{x} \cdot \lim_{x\rightarrow +\infty} \frac{1}{x} \cdot \lim_{x\rightarrow +\infty} \frac{1}{x} \cdot \lim_{x\rightarrow +\infty} \frac{1}{x} \\
+	&= 0 \cdot 0 \cdot 0 \cdot 0 \cdot 0 \\ 
+	&= 0
+\end{align*}
+\subsubsection{}
+Generalizando a questão anterior:
+\begin{align*}
+	\lim_{x\rightarrow + \infty} \frac{1}{x^n}
+	&= \lim_{x\rightarrow + \infty} \prod^n \frac{1}{x} \\
+	&= \prod^n \lim_{x\rightarrow +\infty} \frac{1}{x}\\
+	&= \prod^n 0 \\ 
+	&= 0
+\end{align*}
+
+\subsection{}
+\subsubsection{}
+\begin{align*}
+	\lim_{x\rightarrow +\infty} \frac{x^3(1 - \frac{3}{x^2} + \frac{2}{x^3} )}{x^3(3+\frac{1}{x^3})} = \frac{1}{3}
+\end{align*}
+\subsubsection{}
+\begin{align*}
+	\lim_{x\rightarrow +\infty} \frac{x^5(2+\frac{3x}{x^3}-\frac{1}{x^4}+\frac{7}{x^5})}{x^5(-1+\frac{2}{x^4}-\frac{9}{x^5})} = -\frac{1}{2}
+\end{align*}
+\subsubsection{}
+\begin{align*}
+	\lim_{x\rightarrow +\infty} \frac{x^4(5-\frac{2}{x^3}+\frac{8}{x^4})}{x^5(1+\frac{2}{x^3}+\frac{79}{x^5})} = \lim_{x\rightarrow +\infty} \frac{5}{x} = 0
+\end{align*}
+\subsubsection{}
+\begin{align*}
+	\lim_{x\rightarrow +\infty} \frac{x^3(1+\frac{1}{x^3})}{x^7(1+\frac{2}{x^7})} = \lim_{x\rightarrow +\infty} \frac{1}{x^4} = 0
+\end{align*}
+
+\part*{Aula 10 - B}% chktex 8
+\section{}
+\subsection{}
+\subsubsection{}
+Dado \(\epsilon > 0\), tome \(\delta = \frac{1}{\epsilon}\).
+
+\begin{align*}
+	0 > x > \delta = \frac{1}{\epsilon}
+	\implies f(x) = \frac{1}{x} < \epsilon
+\end{align*}
+\subsubsection{}
+Com as propriedades de subtração e multiplicação de limites:
+\begin{align*}
+	\lim_{x\rightarrow +\infty} -x^2
+	&= -\lim_{x\rightarrow +\infty} x \cdot \lim_{x\rightarrow +\infty} x \\
+	&= -\infty
+\end{align*}
+
+\subsection{}
+\subsubsection{}
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+		\addplot[domain=-1:1.9]{1/abs(x-2)};
+		\addplot[domain=2.1:4]{1/abs(x-2)};
+		\draw[dashed] (axis cs:2,10) -- (axis cs:2,0);
+	\end{axis}
+\end{tikzpicture}
+
+Verdadeira. Pela direita ou pela esquerda, o denominador da função vai sempre tender a \(0\) pelo lado positivo quando \(x\rightarrow 2\):
+\begin{align*}
+	\lim_{x\rightarrow 2} \frac{1}{\abs{x-2}} = \lim_{x\rightarrow 0+} \frac{1}{x} = +\infty
+\end{align*}
+
+\subsubsection{}
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+		\addplot[domain=-1:4.8]{2/(x-5)};
+		\addplot[domain=5.2:10]{2/(x-5)};
+		\draw[dashed] (axis cs:5,10) -- (axis cs:5,-10);
+	\end{axis}
+\end{tikzpicture}
+
+Falsa. Quando \(x\rightarrow 5\) pela esquerda, o denominador tende a 0 pelo lado negativo:
+\begin{align*}
+	\lim_{x\rightarrow 5-} \frac{2}{\abs{x-5}} = \lim_{x\rightarrow 0-} \frac{1}{x} = -\infty
+\end{align*}
+
+\subsubsection{}
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+		\addplot[domain=-1:4.8]{2/(x-5)};
+		\addplot[domain=5.2:10]{2/(x-5)};
+		\draw[dashed] (axis cs:5,10) -- (axis cs:5,-10);
+	\end{axis}
+\end{tikzpicture}
+
+Verdadeira. Quando \(x\rightarrow 5\) pela direita, o denominador tende a \(0\) pelo lado positivo, então a função é positiva.
+\begin{align*}
+	\lim_{x\rightarrow 5-} \frac{2}{\abs{x-5}} = \lim_{x\rightarrow 0-} \frac{1}{x} = +\infty
+\end{align*}
+
+\subsubsection{}
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+		\addplot[domain=-2:0.6]{1/( x^2 - 5*x + 3 )};
+		\addplot[domain=0.8:4.2]{1/( x^2 - 5*x + 3 )};
+		\addplot[domain=4.4:7]{1/( x^2 - 5*x + 3 )};
+	\end{axis}
+\end{tikzpicture}
+
+Falsa. Como a função está definida em \(f(0)\):
+\begin{align*}
+	\lim_{x\rightarrow 0} \frac{1}{x^2 - 5x +3} = f(0) = \frac{1}{3} \neq +\infty
+\end{align*}
+\subsubsection{}
+\begin{tikzpicture}
+	\begin{axis}[axis lines=middle, samples=200]
+		\addplot[domain=-30:4.9]{(2*x^3 - 2)/(x-5)};
+		\addplot[domain=5.1:30]{(2*x^3 - 2)/(x-5)};
+	\end{axis}
+\end{tikzpicture}
+
+Falsa:
+\begin{align*}
+	\lim_{x\rightarrow \infty} \frac{2x^3 - 2}{x-5} = \lim_{x\rightarrow \infty} \frac{x^3(2-\frac{2}{x^3})}{x(1-\frac{5}{x})} = \lim_{x\rightarrow \infty} 2x^2 = +\infty
+\end{align*}
+\section{}
+\subsection{}
+\subsubsection{}
+\begin{align*}
+	\lim_{x \rightarrow +\infty} \sqrt{x+5} - \sqrt{x}
+	&= \lim_{x \rightarrow +\infty} \frac{5}{\sqrt{x+5}+\sqrt{x}} \\
+	&= 5 \frac{1}{\infty} \\
+	&= 0
+\end{align*}
+\subsubsection{}
+TODO
+
+\section{}
+\subsection{}
+TODO
+
+\subsection{}
+TODO
+
+\end{document} 

@@ -1,0 +1,23 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+\title{SMA0508 | Matemática Discreta \\ Atividade 3 (Parte 2)}
+\author{Gabriel Fontes | 10856803}
+
+\begin{document}
+\maketitle
+Como enunciado, temos $A = \{p_1, \dots p_k\}$, um conjunto finito de primos positivos. Além disso, temos $n = p_1\dots p_k+1$.
+\medskip
+
+Queremos provar que existe um primo positivo $p$ tal que $p \notin A$. O número $p_1\dots p_k$, como produto de primos, é obrigatoriamente $> 1$, logo $n > 2$.
+\medskip
+
+Se vale o teorema fundamental da aritmética, todo número $>1$ é produto de um número primo (que pode ser ele mesmo). Logo existe um $p$ primo que divide $n$. Suponha por absurdo que $p \in A$. Por consequência, $p$ obrigatoriamente divide $p_1\dots p_k$ (já que é um fator da multiplicação). Se um número divide uma soma e uma das (duas) parcelas, ele nescessariamente divide a outra. Ou seja, para que $p$ divida $n$ e $p_1\dots p_k$ ao mesmo tempo, ele também precisa dividir $1$, impossível para um número primo, absurdo.
+\smallskip
+
+$\therefore \exists$ $p$ primo tal que $p \notin A$
+
+\end{document}
