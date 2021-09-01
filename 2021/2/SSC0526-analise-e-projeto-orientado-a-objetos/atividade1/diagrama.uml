@@ -1,32 +1,54 @@
 @startuml
 left to right direction
 
-actor Cliente as client
+:Mantenedor:/ as admin
 
-usecase (Inserir cartão na entrada) as in_card
-usecase (Imprimir bilhete na entrada) as in_ticket
-usecase (Pagar bilhete) as pay_ticket
+(Gerir atendentes)/ as manage_crew
+(Gerir clientes)/ as manage_client
+(Gerir máquinas)/ as manage_machine
 
-usecase (Inserir bilhete na saída) as out_ticket
-usecase (Inserir cartão na saída) as out_card
+admin --> manage_crew
+admin --> manage_client
+admin --> manage_machine
 
-usecase (Validar bilhete) as validate_ticket
-usecase (Validar cartão) as validate_card
+:Cliente: as client
+(Entrar) as client_in
+(Sair) as client_out
+client --> client_in
+client --> client_out
 
-usecase (Registrar entrada) as register_in
-usecase (Registrar saída) as register_out
+(Inserir cartão) as insert_card
+(Solicitar cartão) as request_card
+(Renovar cartão) as renew_card
+(Pagar cartão) as pay_card
 
-in_card --> register_in
-in_ticket --> register_in
+(Receber bilhete) as in_ticket
+(Pagar bilhete) as pay_ticket
+(Devolver bilhete) as out_ticket
 
-in_card --> validate_card
+client_in --> in_ticket
+client_out --> pay_ticket
+pay_ticket --> out_ticket
 
-out_ticket --> validate_ticket
 
-client --> in_card
-client --> in_ticket
-client --> out_card
-client --> out_ticket
-client --> pay_ticket
+:Cliente Preferencial: as p_client
+(Entrar) as p_client_in
+(Sair) as p_client_out
+p_client --> p_client_in
+p_client --> p_client_out
+
+p_client_in --> insert_card
+p_client_out --> insert_card
+p_client --> request_card
+p_client --> renew_card
+
+request_card ..> pay_card: "<<include>>"
+renew_card ..> pay_card: "<<include>>"
+
+:Atendente:/ as crew
+
+crew <.. pay_card: Opcionalmente
+crew <.. pay_ticket: Opcionalmente
+
 
 @enduml
